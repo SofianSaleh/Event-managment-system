@@ -14,8 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: getaddrinfo ENOTFOUND registry.npmjs.org
-      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:60:26)
+  Error: ENOENT: no such file or directory, copyfile 'C:\Users\FSA\AppData\Local\Yarn\Cache\v6\npm-semver-6.3.0-ee0a64c8af5e8ceea67687b133761e1becbd1d3d-integrity\node_modules\semver\CHANGELOG.md' -> 'C:\Users\FSA\Documents\Projects\Evently\node_modules\make-dir\node_modules\semver\CHANGELOG.md'
 
 npm manifest: 
   {

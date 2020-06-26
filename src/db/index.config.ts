@@ -1,3 +1,11 @@
 import mongoose from "mongoose";
 
-mongoose.connect(URI,() => )
+const URI = process.env.URI || "mongodb://localhost/evently";
+
+function connectToDB() {
+  mongoose.connect(`mongodb://localhost/${process.env.DATABASE_NAME}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  });
+}
