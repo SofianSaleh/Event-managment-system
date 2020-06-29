@@ -13,6 +13,6 @@ export default {
   },
   Mutation: {
     login: async () => {},
-    res: async () => {},
+    register: async () => {},
   },
 };

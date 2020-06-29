@@ -19,21 +19,21 @@ export default `
     }
 
     type Query {
-        getUser(Id: string): UserFetched!
-        getAllUsers: [UserFeched!]!
+        getUser(Id: String): UserFetched!
+        getAllUsers: [UserFetched!]!
     }
 
     type registerResponse {
         success: Boolean!
         user: User
-        errors: [Error!]
+        
     }
     
     type loginResponse {
         success: Boolean!
         token: String
         refreshToken: String
-        errors: [Error!]
+        
     }
 
     type Mutation {

@@ -12,26 +12,30 @@ dotenv.config();
 const PORT = process.env.PORT || 5000;
 
 (async () => {
-  const app = express();
+  try {
+    const app = express();
 
-  // app.use(express.json());
+    // app.use(express.json());
 
-  await connectToDB();
-  const types = loadFilesSync(path.join(__dirname, "./schemas"));
-  const resol = loadFilesSync(path.join(__dirname, "./resolvers"));
-  const typeDefs = mergeTypeDefs(types);
-  const resolvers = mergeResolvers(resol);
+    await connectToDB();
+    const types = loadFilesSync(path.join(__dirname, "./schemas"));
+    const resol = loadFilesSync(path.join(__dirname, "./resolvers"));
+    const typeDefs = mergeTypeDefs(types);
+    const resolvers = mergeResolvers(resol);
 
-  const apolloServer = new ApolloServer({
-    typeDefs,
-    resolvers,
-  });
+    const apolloServer = new ApolloServer({
+      typeDefs,
+      resolvers,
+    });
 
-  apolloServer.applyMiddleware({ app, cors: false });
+    apolloServer.applyMiddleware({ app, cors: false });
 
-  app.listen(PORT, () =>
-    console.log(
-      `${chalk.blue("Listening on PORT")} ${chalk.underline.yellow(PORT)}`
-    )
-  );
+    app.listen(PORT, () =>
+      console.log(
+        `${chalk.blue("Listening on PORT")} ${chalk.underline.yellow(PORT)}`
+      )
+    );
+  } catch (e) {
+    console.log(e);
+  }
 })();
