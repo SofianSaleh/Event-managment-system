@@ -12,48 +12,50 @@ const EventSchema: Schema = new Schema(
     comments: [
       {
         comment: {
-          type: string,
-          required,
+          type: String,
+          required: true,
+        },
+        user_id: {
+          type: Schema.Types.ObjectId,
+          ref: "User",
         },
       },
     ],
-    email: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-
-    gender: {
-      type: Schema.Types.String,
-      required: true,
-      enum: ["male", "female"],
-    },
-
-    code: {
-      type: String,
-    },
-    is_verified: {
-      type: Boolean,
-      default: false,
+    location: { type: [Number], index: { type: "2dsphere", sparse: true } },
+    date: {
+      type: Date,
     },
   },
   { timestamps: { createdAt: true } }
 );
 
-export interface UserProps extends Document {
-  firstName: string;
-  lastName: string;
-  username: string;
-  email: string;
-  password: string;
-  gender: string;
-  code: string;
+export interface EventProps extends Document {
+  title: string;
+  description: string;
+  comments: [
+    {
+      comment: string;
+      user_id: string;
+    }
+  ];
+  location: [string];
+  date: Date;
 }
 
-export default model<UserProps>("User", UserSchema);
+export default model<EventProps>("Event", EventSchema);
+
+// const pointSchema:Schema = new Schema({
+//   type: {
+//     type: String,
+//     enum: ['Point'],
+//     required: true
+//   },
+//   coordinates: {
+//     type: [Number],
+//     required: true
+//   }
+// });
+
 // comments: [
 //   {
 //     body: { type: String, required: true },
