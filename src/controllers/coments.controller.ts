@@ -1,7 +1,7 @@
 import Event from "../db/models/Event.model";
 
-class EventController {
+class CommentController {
   public async getUser() {}
 }
 
-export default new EventController();
+export default new CommentController();
