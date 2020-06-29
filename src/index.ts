@@ -3,7 +3,9 @@ import * as dotenv from "dotenv";
 import chalk from "chalk";
 import { ApolloServer } from "apollo-server-express";
 import connectToDB from "./db/index.config";
-
+import { mergeTypeDefs, mergeResolvers } from "@graphql-tools/merge";
+import { loadFilesSync } from "@graphql-tools/load-files";
+import path, { dirname } from "path";
 
 dotenv.config();
 
@@ -15,15 +17,14 @@ const PORT = process.env.PORT || 5000;
   // app.use(express.json());
 
   await connectToDB();
+  const types = loadFilesSync(path.join(__dirname, "./schemas"));
+  const resol = loadFilesSync(path.join(__dirname, "./resolvers"));
+  const typeDefs = mergeTypeDefs(types);
+  const resolvers = mergeResolvers(resol);
 
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
-    context: async ({req, res}) {
-      SECRET: process.env.SECRET,
-      SECRET2: process.env.SECRET2
-    }
-    }),
   });
 
   apolloServer.applyMiddleware({ app, cors: false });

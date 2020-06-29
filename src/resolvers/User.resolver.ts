@@ -1,10 +1,18 @@
+import userController from "../controllers/user.Controller";
+
 export default {
   Query: {
-      getUser: async() => {},
-      getAllUsers: async() => {},
+    getUser: async (id: string) => {
+      try {
+        return userController.getUser(id);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    getAllUsers: async () => {},
   },
   Mutation: {
-    login: async() => {},
-    res: async() => {},
+    login: async () => {},
+    res: async () => {},
   },
 };
