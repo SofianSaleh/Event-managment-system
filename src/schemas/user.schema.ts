@@ -19,6 +19,7 @@ export default `
     }
 
     type Query {
+        hello: String!
         getUser(Id: String): UserFetched!
         getAllUsers: [UserFetched!]!
     }

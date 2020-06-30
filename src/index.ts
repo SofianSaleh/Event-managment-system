@@ -28,7 +28,7 @@ const resolvers = mergeResolvers(resol);
     const apolloServer = new ApolloServer({
       typeDefs,
       resolvers,
-      context: async ({ req }: any) => ({ req }),
+      context: async ({ req, res }: any) => ({ req, res }),
     });
 
     const app = express();
