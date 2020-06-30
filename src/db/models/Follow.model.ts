@@ -18,5 +18,5 @@ export interface FollowProps extends Document {
   follwer: string;
   following: string;
 }
-
-export default model<FollowProps>("Follow", FollowSchema);
+const Follow = model<FollowProps>("Follow", FollowSchema);
+export default Follow;

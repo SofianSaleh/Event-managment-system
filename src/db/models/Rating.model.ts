@@ -27,4 +27,5 @@ export interface RatingProps extends Document {
   rating: Number;
 }
 
-export default model<RatingProps>("Rating", RatingSchema);
+const Rating = model<RatingProps>("Rating", RatingSchema);
+export default Rating;

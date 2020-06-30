@@ -49,7 +49,8 @@ export interface UserProps extends Document {
   code: string;
 }
 
-export default model<UserProps>("User", UserSchema);
+const User = model<UserProps>("User", UserSchema);
+export default User;
 // comments: [
 //   {
 //     body: { type: String, required: true },

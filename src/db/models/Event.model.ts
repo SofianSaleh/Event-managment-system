@@ -42,7 +42,8 @@ export interface EventProps extends Document {
   date: Date;
 }
 
-export default model<EventProps>("Event", EventSchema);
+const Event = model<EventProps>("Event", EventSchema);
+export default Event;
 
 // const pointSchema:Schema = new Schema({
 //   type: {
