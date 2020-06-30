@@ -39,7 +39,7 @@ const UserSchema: Schema = new Schema(
   { timestamps: { createdAt: true } }
 );
 
-export interface UserProps extends Document {
+interface UserProps extends Document {
   firstName: string;
   lastName: string;
   username: string;

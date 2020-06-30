@@ -2,9 +2,11 @@ import userController from "../controllers/user.Controller";
 
 export default {
   Query: {
-    getUser: async (id: string) => {
+    getUser: function async() {
       try {
-        return userController.getUser(id);
+        console.log(`hi`);
+        console.log(arguments);
+        return userController.getUser(`213423412`);
       } catch (e) {
         console.log(e);
       }

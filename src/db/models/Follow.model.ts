@@ -14,7 +14,7 @@ const FollowSchema: Schema = new Schema(
   { timestamps: { createdAt: true } }
 );
 
-export interface FollowProps extends Document {
+interface FollowProps extends Document {
   follwer: string;
   following: string;
 }

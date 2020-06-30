@@ -21,7 +21,7 @@ const RatingSchema: Schema = new Schema(
   { timestamps: { createdAt: true } }
 );
 
-export interface RatingProps extends Document {
+interface RatingProps extends Document {
   user_id: string;
   event_id: string;
   rating: Number;
