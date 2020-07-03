@@ -38,8 +38,8 @@ export default {
       const valid = verifyPassword(user.password, password);
       if (!valid) return { success: false, token: null, refresh: null };
 
-      const accessToken = createNormalToken(user.id);
-      const refreshToken = createRefreshToken(user.id, user.count);
+      const accessToken = await createNormalToken(user.id);
+      const refreshToken = await createRefreshToken(user.id, user.count);
       console.log(accessToken, refreshToken);
       res.cookie(`refresh-token`, refreshToken);
       res.cookie(`access-token`, accessToken);

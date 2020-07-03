@@ -2,14 +2,13 @@ import * as dotenv from "dotenv";
 import { ApolloServer } from "apollo-server-express";
 import express from "express";
 
-import mongoose from "mongoose";
-
 import { mergeTypeDefs, mergeResolvers } from "@graphql-tools/merge";
 import { loadFilesSync } from "@graphql-tools/load-files";
-import path, { dirname } from "path";
+import path from "path";
 
 import chalk from "chalk";
 import connectToDB from "./db/index.config";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -32,6 +31,7 @@ const resolvers = mergeResolvers(resol);
     });
 
     const app = express();
+    app.use(cookieParser());
 
     apolloServer.applyMiddleware({ app, cors: false });
 
