@@ -1,5 +1,5 @@
 import { compare, hash, genSalt } from "bcryptjs";
-import {} from "uuid";
+// import { v4 } from "uuid";
 
 export const hashPassword = async (password: string): Promise<string> => {
   try {
@@ -11,7 +11,7 @@ export const hashPassword = async (password: string): Promise<string> => {
   }
 };
 
-export const verifyPasswords = async (
+export const verifyPassword = async (
   hashedPassword: string,
   passwordEntered: string
 ): Promise<boolean> => {
@@ -22,10 +22,10 @@ export const verifyPasswords = async (
   }
 };
 
-export const generateValidationCode = () => {
-  try {
-    return v4();
-  } catch (e) {
-    throw e.message;
-  }
-};
+// export const generateValidationCode = () => {
+//   try {
+//     return v4();
+//   } catch (e) {
+//     throw e.message;
+//   }
+// };

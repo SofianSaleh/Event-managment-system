@@ -46,6 +46,7 @@
     "graphql": "^15.1.0",
     "graphql-tools": "^6.0.11",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.20"
+    "mongoose": "^5.9.20",
+    "uuid": "^8.2.0"
   }
 }

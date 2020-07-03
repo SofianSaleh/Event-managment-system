@@ -1,4 +1,5 @@
 import userController from "../controllers/user.Controller";
+import { verifyPassword } from "../services/crypt.service";
 
 export default {
   Query: {
@@ -27,7 +28,8 @@ export default {
       const user = await userController.getUser({ email: email });
       if (!user) return null;
 
-      const valid = "";
+      const valid = verifyPassword(user.password, password);
+      if (!valid) return null;
     },
     register: async () => {},
   },
