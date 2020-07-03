@@ -35,6 +35,18 @@ class UserController {
       throw e;
     }
   }
+
+  public async incrementCount(id: string) {
+    try {
+      const incrementedUser = await User.findByIdAndUpdate(id, {
+        $inc: { count: 1 },
+      });
+      console.log(incrementedUser);
+      return incrementedUser;
+    } catch (e) {
+      throw e;
+    }
+  }
 }
 
 export default new UserController();

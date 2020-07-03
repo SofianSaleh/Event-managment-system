@@ -7,14 +7,17 @@ import { createNormalToken } from "../services/auth.service";
 import userController from "../controllers/user.Controller";
 import { sendRefreshToken } from "../helpers/sendRefreshToken.helper";
 
-export const isAuth = (req: any, _res: any, _next: any) => {
+export const isAuth = (req: any, _res: any, next: any) => {
   const authorization = req.headers["authorization"];
-  if (!authorization) throw new Error(`No authorization`);
+  if (!authorization) return next();
   try {
     const token = authorization.split(" ")[1];
     const data = verifyAccessToken(token);
     req.user = data;
-  } catch (e) {}
+    return next();
+  } catch (e) {
+    return next();
+  }
 };
 
 /**
@@ -41,6 +44,9 @@ export const refreshToken = async (req: any, res: any) => {
   const user = await userController.getUser({ id: payload.userId });
   console.log(user);
   if (!user) return res.json({ success: false, msg: "no UsEr WaS fOuNd" });
+
+  if (user.count !== payload.count)
+    return res.json({ success: false, msg: `Token is invalid` });
 
   const refreshToken = createRefreshToken(user.id, user.count);
 

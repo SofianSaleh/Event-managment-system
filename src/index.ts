@@ -11,6 +11,7 @@ import connectToDB from "./db/index.config";
 import cookieParser from "cookie-parser";
 
 import { refreshToken } from "./middlewares/isAuth.middleware";
+import { invalidateRefreshToken } from "./helpers/invalidateRefreshTokens.helper";
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ const resolvers = mergeResolvers(resol);
     await connectToDB();
 
     app.post("/refresh_token", refreshToken);
+    app.post("/invalidate", invalidateRefreshToken);
 
     const apolloServer = new ApolloServer({
       typeDefs,

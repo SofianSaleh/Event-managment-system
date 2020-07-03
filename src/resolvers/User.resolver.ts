@@ -41,15 +41,15 @@ export default {
       { email, password }: { email: string; password: string },
       { res }: any
     ) => {
-      const user = await userController.getUser({ email: email });
+      const user = await userController.getUser({ email });
       console.log(user);
       if (!user) return { success: false, token: null, refresh: null };
 
       const valid = verifyPassword(user.password, password);
       if (!valid) return { success: false, token: null, refresh: null };
 
-      const accessToken = await createNormalToken(user.id);
-      const refreshToken = await createRefreshToken(user.id, user.count);
+      const accessToken = createNormalToken(user.id);
+      const refreshToken = createRefreshToken(user.id, user.count);
 
       sendRefreshToken(res, refreshToken);
 
