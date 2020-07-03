@@ -38,13 +38,13 @@ export default `
     }
 
     type UserInput {
-        firstName: string
-        lastName: string
-        username: string!
-        email: string!
-        password: string!
-        gender: string
-        code: string
+        firstName: String
+        lastName: String
+        username: String!
+        email: String!
+        password: String!
+        gender: String
+        code: String
     }
 
     type Mutation {
