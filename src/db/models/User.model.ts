@@ -28,6 +28,11 @@ const UserSchema: Schema = new Schema(
       enum: ["male", "female"],
     },
 
+    count: {
+      type: Number,
+      default: 0,
+    },
+
     code: {
       type: String,
     },
@@ -47,6 +52,7 @@ interface UserProps extends Document {
   password: string;
   gender: string;
   code: string;
+  count: number;
 }
 
 const User = model<UserProps>("User", UserSchema);
