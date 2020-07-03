@@ -1,5 +1,5 @@
 import User from "../db/models/User.model";
-import { UserInput } from "../interfaces/User.interface";
+
 import {
   hashPassword,
   generateValidationCode,
@@ -15,7 +15,7 @@ class UserController {
     }
   }
 
-  public async register({ userInfo }: any) {
+  public async register(userInfo: any) {
     try {
       console.log("user ifo ", userInfo.password);
       const hashedPassword = await hashPassword(userInfo.password);

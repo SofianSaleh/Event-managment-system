@@ -1,5 +1,4 @@
 import { sign, verify } from "jsonwebtoken";
-import userController from "../controllers/user.Controller";
 
 export const createNormalToken = async (id: string) => {
   try {

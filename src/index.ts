@@ -34,13 +34,14 @@ const resolvers = mergeResolvers(resol);
     const app = express();
     app.use(cookieParser());
 
-    app.use((req: any, res, next) => {
+    app.use((req: any, _res: any, next) => {
       const accessToken = req.cookies["access-token"];
       try {
         const data = verifyAccessToken(accessToken) as any;
+
         req.userId = data.user_Id;
       } catch (e) {}
-      next();
+      return next();
       // room for improvement
     });
 

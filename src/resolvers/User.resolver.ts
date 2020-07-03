@@ -8,17 +8,19 @@ import {
 
 export default {
   Query: {
-    getUser: function async(_: any, id: string, { req }: any) {
+    getUser: (_: any, id: string, { req }: any) => {
       try {
+        console.log(req.userId);
         if (req.userId) return null;
         const user = userController.getUser({ id });
         if (!user) return null;
         return user;
       } catch (e) {
         console.log(e);
+        throw e;
       }
     },
-    getUserByUsername: function async(_: any, username: string, { req }: any) {
+    getUserByUsername: (_: any, username: string, { req }: any) => {
       try {
         if (req.userId) return null;
         const user = userController.getUser({ username });
@@ -26,6 +28,7 @@ export default {
         return user;
       } catch (e) {
         console.log(e);
+        throw e;
       }
     },
     getAllUsers: async () => {},
@@ -57,7 +60,7 @@ export default {
     register: async (_: any, userInfo: UserInput) => {
       try {
         console.log(userInfo.password, "UserIndfo");
-        const newUser = userController.register(userInfo.password);
+        const newUser = userController.register(userInfo);
         return {
           success: true,
           user: newUser,

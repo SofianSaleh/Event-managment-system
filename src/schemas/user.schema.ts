@@ -22,7 +22,7 @@ export default gql`
 
   type Query {
     hello: String!
-    getUser(id: String): UserFetched!
+    getUser(id: String): UserFetched
     getUserByUsername(username: String): UserFetched!
     getAllUsers: [UserFetched!]!
   }
