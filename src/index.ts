@@ -9,7 +9,8 @@ import path from "path";
 import chalk from "chalk";
 import connectToDB from "./db/index.config";
 import cookieParser from "cookie-parser";
-import { verifyAccessToken } from "./services/auth.service";
+
+import { isAuth } from "./middlewares/isAuth.middleware";
 
 dotenv.config();
 
@@ -34,16 +35,18 @@ const resolvers = mergeResolvers(resol);
     const app = express();
     app.use(cookieParser());
 
-    app.use((req: any, _res: any, next) => {
-      const accessToken = req.cookies["access-token"];
-      try {
-        const data = verifyAccessToken(accessToken) as any;
+    app.use(isAuth);
 
-        req.userId = data.user_Id;
-      } catch (e) {}
-      return next();
-      // room for improvement
-    });
+    // app.use((req: any, _res: any, next) => {
+    //   const accessToken = req.cookies["access-token"];
+    //   try {
+    //     const data = verifyAccessToken(accessToken) as any;
+
+    //     req.userId = data.user_Id;
+    //   } catch (e) {}
+    //   return next();
+    //   // room for improvement
+    // });
 
     apolloServer.applyMiddleware({ app, cors: false });
 

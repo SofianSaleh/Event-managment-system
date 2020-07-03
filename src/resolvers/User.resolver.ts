@@ -14,6 +14,7 @@ export default {
         if (req.userId) return null;
         const user = userController.getUser({ id });
         if (!user) return null;
+        console.log(user);
         return user;
       } catch (e) {
         console.log(e);
@@ -50,10 +51,9 @@ export default {
       const refreshToken = await createRefreshToken(user.id, user.count);
       console.log(accessToken, refreshToken);
       res.cookie(`refresh-token`, refreshToken);
-      res.cookie(`access-token`, accessToken);
       return {
         success: true,
-        token: null,
+        token: accessToken,
         refresh: null,
       };
     },
