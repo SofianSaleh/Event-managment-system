@@ -31,3 +31,21 @@ export const createRefreshToken = async (id: string, count: number) => {
     throw e;
   }
 };
+
+export const verifyAccessToken = (token: string) => {
+  try {
+    const verifiedToken = verify(token, `${process.env.SECRET_1}`);
+    return verifiedToken;
+  } catch (e) {
+    throw e;
+  }
+};
+
+export const verifyRefreshToken = (token: string) => {
+  try {
+    const verifiedToken = verify(token, `${process.env.SECRET_2}`);
+    return verifiedToken;
+  } catch (e) {
+    throw e;
+  }
+};

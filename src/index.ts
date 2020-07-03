@@ -9,6 +9,7 @@ import path from "path";
 import chalk from "chalk";
 import connectToDB from "./db/index.config";
 import cookieParser from "cookie-parser";
+import { verifyAccessToken } from "./services/auth.service";
 
 dotenv.config();
 
@@ -32,6 +33,18 @@ const resolvers = mergeResolvers(resol);
 
     const app = express();
     app.use(cookieParser());
+
+    app.use((req: any, res, next) => {
+      try {
+        const accessToken = req.cookies["access-token"];
+        const data = verifyAccessToken(accessToken) as any;
+        req.userId = data.user_Id;
+        next();
+      } catch (e) {
+        throw e;
+      }
+      // room for improvement
+    });
 
     apolloServer.applyMiddleware({ app, cors: false });
 
