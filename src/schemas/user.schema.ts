@@ -37,8 +37,18 @@ export default `
         
     }
 
+    type UserInput {
+        firstName: string
+        lastName: string
+        username: string!
+        email: string!
+        password: string!
+        gender: string
+        code: string
+    }
+
     type Mutation {
-        register(username: String!, email: String!, password: String!): registerResponse!
+        register(userInfo: UserInput): registerResponse!
         login(email: String!, password: String!): loginResponse!
     }
 

@@ -40,8 +40,8 @@ export default {
       const accessToken = createNormalToken(user.id);
       const refreshToken = createRefreshToken(user.id, user.count);
 
-      res.cookie(`refresh-token`, refreshToken, { expires: 60 * 60 * 24 * 7 });
-      res.cookie(`access-token`, accessToken, { expires: 60 * 15 });
+      res.cookie(`refresh-token`, refreshToken);
+      res.cookie(`access-token`, accessToken);
     },
     register: async (_: any, userInfo: UserInput) => {
       try {
