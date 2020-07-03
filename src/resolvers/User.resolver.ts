@@ -1,6 +1,7 @@
 import userController from "../controllers/user.Controller";
 import { verifyPassword } from "../services/crypt.service";
 import { UserInput } from "../interfaces/User.interface";
+import { sendRefreshToken } from "../helpers/sendRefreshToken.helper";
 import {
   createNormalToken,
   createRefreshToken,
@@ -49,8 +50,9 @@ export default {
 
       const accessToken = await createNormalToken(user.id);
       const refreshToken = await createRefreshToken(user.id, user.count);
-      console.log(accessToken, refreshToken);
-      res.cookie(`refresh-token`, refreshToken);
+
+      sendRefreshToken(res, refreshToken);
+
       return {
         success: true,
         token: accessToken,
