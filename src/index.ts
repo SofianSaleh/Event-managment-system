@@ -35,14 +35,12 @@ const resolvers = mergeResolvers(resol);
     app.use(cookieParser());
 
     app.use((req: any, res, next) => {
+      const accessToken = req.cookies["access-token"];
       try {
-        const accessToken = req.cookies["access-token"];
         const data = verifyAccessToken(accessToken) as any;
         req.userId = data.user_Id;
-        next();
-      } catch (e) {
-        throw e;
-      }
+      } catch (e) {}
+      next();
       // room for improvement
     });
 

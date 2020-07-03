@@ -8,17 +8,22 @@ import {
 
 export default {
   Query: {
-    hello: async (_: any, id: string, { req }: any) => {
-      console.log(`hi`);
-      console.log(req.body);
-      return "world";
-    },
-    getUser: function async(_: any, __: any, { req }: any) {
+    getUser: function async(_: any, id: string, { req }: any) {
       try {
-        console.log(req.body);
-        console.log(`hi`);
-        console.log(arguments);
-        return `213423412`;
+        if (req.userId) return null;
+        const user = userController.getUser({ id });
+        if (!user) return null;
+        return user;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    getUserByUsername: function async(_: any, username: string, { req }: any) {
+      try {
+        if (req.userId) return null;
+        const user = userController.getUser({ username });
+        if (!user) return null;
+        return user;
       } catch (e) {
         console.log(e);
       }
@@ -51,8 +56,8 @@ export default {
     },
     register: async (_: any, userInfo: UserInput) => {
       try {
-        console.log(userInfo, "UserIndfo");
-        const newUser = userController.register(userInfo);
+        console.log(userInfo.password, "UserIndfo");
+        const newUser = userController.register(userInfo.password);
         return {
           success: true,
           user: newUser,

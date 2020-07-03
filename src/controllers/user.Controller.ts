@@ -6,9 +6,9 @@ import {
 } from "../services/crypt.service";
 
 class UserController {
-  public async getUser(userinfo: any) {
+  public async getUser(anything: any) {
     try {
-      const user = await User.findOne(userinfo);
+      const user = await User.findOne(anything);
       return user;
     } catch (e) {
       throw e;

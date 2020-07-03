@@ -22,7 +22,8 @@ export default gql`
 
   type Query {
     hello: String!
-    getUser(Id: String): UserFetched!
+    getUser(id: String): UserFetched!
+    getUserByUsername(username: String): UserFetched!
     getAllUsers: [UserFetched!]!
   }
 
@@ -37,18 +38,16 @@ export default gql`
     refreshToken: String
   }
 
-  input UserInput {
-    firstName: String
-    lastName: String
-    username: String!
-    email: String!
-    password: String!
-    gender: String
-    code: String
-  }
-
   type Mutation {
-    register(userInfo: UserInput): registerResponse!
+    register(
+      firstName: String
+      lastName: String
+      username: String!
+      email: String!
+      password: String!
+      gender: String
+      code: String
+    ): registerResponse!
     login(email: String!, password: String!): loginResponse!
   }
 `;
