@@ -17,10 +17,15 @@ class UserController {
 
   public async register(userInfo: UserInput) {
     try {
+      console.log("user ifo ", userInfo);
       const hashedPassword = await hashPassword(userInfo.password);
+      console.log(hashedPassword);
       const code = generateValidationCode();
+      console.log(code);
       userInfo.code = code;
       userInfo.password = hashedPassword;
+
+      console.log(userInfo);
 
       const newUser = new User(userInfo);
       await newUser.save();

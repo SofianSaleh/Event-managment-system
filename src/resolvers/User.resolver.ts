@@ -45,6 +45,7 @@ export default {
     },
     register: async (_: any, userInfo: UserInput) => {
       try {
+        console.log(userInfo, "UserIndfo");
         const newUser = userController.register(userInfo);
         return {
           success: true,
