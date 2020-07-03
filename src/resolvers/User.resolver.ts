@@ -32,16 +32,22 @@ export default {
       { res }: any
     ) => {
       const user = await userController.getUser({ email: email });
+      console.log(user);
       if (!user) return { success: false, token: null, refresh: null };
 
       const valid = verifyPassword(user.password, password);
-      if (!valid) return null;
+      if (!valid) return { success: false, token: null, refresh: null };
 
       const accessToken = createNormalToken(user.id);
       const refreshToken = createRefreshToken(user.id, user.count);
-
+      console.log(accessToken, refreshToken);
       res.cookie(`refresh-token`, refreshToken);
       res.cookie(`access-token`, accessToken);
+      return {
+        success: true,
+        token: null,
+        refresh: null,
+      };
     },
     register: async (_: any, userInfo: UserInput) => {
       try {

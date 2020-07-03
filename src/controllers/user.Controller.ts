@@ -15,9 +15,9 @@ class UserController {
     }
   }
 
-  public async register(userInfo: UserInput) {
+  public async register({ userInfo }: any) {
     try {
-      console.log("user ifo ", userInfo);
+      console.log("user ifo ", userInfo.password);
       const hashedPassword = await hashPassword(userInfo.password);
       console.log(hashedPassword);
       const code = generateValidationCode();
