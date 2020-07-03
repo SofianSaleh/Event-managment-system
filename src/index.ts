@@ -10,7 +10,7 @@ import chalk from "chalk";
 import connectToDB from "./db/index.config";
 import cookieParser from "cookie-parser";
 
-import { isAuth } from "./middlewares/isAuth.middleware";
+import { refreshToken } from "./middlewares/isAuth.middleware";
 
 dotenv.config();
 
@@ -23,8 +23,13 @@ const resolvers = mergeResolvers(resol);
 
 (async () => {
   try {
-    // app.use(express.json());
+    const app = express();
+    app.use(express.json());
+    app.use(cookieParser());
+
     await connectToDB();
+
+    app.post("/refresh_token", refreshToken);
 
     const apolloServer = new ApolloServer({
       typeDefs,
@@ -32,10 +37,7 @@ const resolvers = mergeResolvers(resol);
       context: async ({ req, res }: any) => ({ req, res }),
     });
 
-    const app = express();
-    app.use(cookieParser());
-
-    app.use(isAuth);
+    // app.use(isAuth);
 
     // app.use((req: any, _res: any, next) => {
     //   const accessToken = req.cookies["access-token"];

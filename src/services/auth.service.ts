@@ -1,6 +1,6 @@
 import { sign, verify } from "jsonwebtoken";
 
-export const createNormalToken = async (id: string) => {
+export const createNormalToken = (id: string) => {
   try {
     const accessToken = sign(
       {
@@ -15,7 +15,7 @@ export const createNormalToken = async (id: string) => {
   }
 };
 
-export const createRefreshToken = async (id: string, count: number) => {
+export const createRefreshToken = (id: string, count: number) => {
   try {
     const refreshToken = sign(
       {
