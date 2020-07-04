@@ -1,5 +1,7 @@
 import User from "../db/models/User.model";
 import { responseFormatter } from "../helpers/errorHandler.helper";
+import { validate } from "../validations/index.validation";
+import { regCredsValidation } from "../validations/regster.validation";
 
 import {
   hashPassword,
@@ -19,21 +21,9 @@ class UserController {
 
   public async register(userInfo: any) {
     try {
-      const isUser = await this.getUser({ email: userInfo.email });
-      console.log(isUser);
-      if (!!isUser)
-        return responseFormatter(false, `User already exists`, null);
-
-      const hashedPassword = await hashPassword(userInfo.password);
-      const code = generateValidationCode();
-
-      userInfo.code = code;
-      userInfo.password = hashedPassword;
-
-      const newUser = new User(userInfo);
-      await newUser.save();
-      console.log(newUser);
-      return responseFormatter(true, `User register successfully`, newUser);
+      let regSchemaVal = await validate(regCredsValidation, userInfo);
+      console.log(regSchemaVal);
+      return { success: true };
     } catch (e) {
       throw e;
     }
