@@ -62,7 +62,10 @@ export default gql`
       password: String!
       gender: String
       code: String
-    ): registerResponse
-    login(email: String!, password: String!): loginResponse
+    ): registerResponse!
+
+    login(email: String!, password: String!): loginResponse!
+
+    verifyUser(code: String!): registerResponse!
   }
 `;

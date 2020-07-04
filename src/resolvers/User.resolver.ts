@@ -95,5 +95,13 @@ export default {
         throw e;
       }
     },
+
+    verifyUser: async (_: any, code: string, { req }: any) => {
+      if (!req.user) return responseFormatter(false, "Token is invalid", null);
+
+      const user = await userController.verifyUser(req.user.user_id, code);
+
+      return user;
+    },
   },
 };
