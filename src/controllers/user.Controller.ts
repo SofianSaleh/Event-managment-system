@@ -48,10 +48,11 @@ class UserController {
       userInfo.password = hashedPassword;
       userInfo.code = generateValidationCode();
 
+      // * Save the user to the DB
       const newUser = new User(userInfo);
       await newUser.save();
-      console.log(newUser);
-      return { success: true, newUser, errors: null };
+
+      return { success: true, user: newUser, errors: null };
     } catch (e) {
       console.log(e.message);
       throw e;

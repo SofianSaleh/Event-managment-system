@@ -66,21 +66,26 @@ export default {
       const user = await userController.getUser({ email });
 
       if (!user)
-        return responseFormatter(
-          true,
-          `User with email: ${email} was found`,
-          null
-        );
+        return {
+          success: false,
+          token: null,
+          errors: [{ path: `Email`, msg: `Email doesn't exist` }],
+        };
 
       const valid = verifyPassword(user.password, password);
-      if (!valid) return responseFormatter(true, `Password is incorrect`, null);
+      if (!valid)
+        return {
+          success: false,
+          token: null,
+          errors: [{ path: `Password`, msg: `Password is wrong` }],
+        };
 
       const accessToken = createNormalToken(user.id);
       const refreshToken = createRefreshToken(user.id, user.count);
 
       sendRefreshToken(res, refreshToken);
 
-      return responseFormatter(true, `Login successful`, { accessToken, user });
+      return { success: true, accessToken, errors: null };
     },
     register: async (_: any, userInfo: UserInput) => {
       try {
