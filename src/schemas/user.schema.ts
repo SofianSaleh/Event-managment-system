@@ -12,27 +12,24 @@ export default gql`
     is_verified: Boolean
     count: Int!
   }
-  
 
   type Query {
-    getUser(id: String): 
-    getUserByUsername(username: String): 
-    getAllUsers: 
+    getUser(id: String): User
+    getUserByUsername(username: String): User
+    getAllUsers: [User!]
   }
 
   type registerResponse {
-        success: Boolean!
-        user: User
-        errors: [Error!]
-    }
-    
-    type loginResponse {
-        success: Boolean!
-        token: String
-        errors: [Error!]
-    }
+    success: Boolean!
+    user: User
+    errors: [Error!]
+  }
 
-    
+  type loginResponse {
+    success: Boolean!
+    token: String
+    errors: [Error!]
+  }
 
   type Mutation {
     register(

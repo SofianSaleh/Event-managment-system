@@ -3,10 +3,10 @@ import { responseFormatter } from "../helpers/errorHandler.helper";
 import { validate } from "../validations/index.validation";
 import { regCredsValidation } from "../validations/regster.validation";
 
-import {
-  hashPassword,
-  generateValidationCode,
-} from "../services/crypt.service";
+// import {
+//   hashPassword,
+//   generateValidationCode,
+// } from "../services/crypt.service";
 
 class UserController {
   public async getUser(anything: any) {
@@ -22,7 +22,9 @@ class UserController {
   public async register(userInfo: any) {
     try {
       let regSchemaVal = await validate(regCredsValidation, userInfo);
-      console.log(regSchemaVal);
+      console.log(regSchemaVal, Array.isArray(regSchemaVal));
+      if (Array.isArray(regSchemaVal))
+        return { success: false, user: null, errors: regSchemaVal };
       return { success: true };
     } catch (e) {
       throw e;

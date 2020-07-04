@@ -1,8 +1,9 @@
-import { formatYupErrors } from "src/helpers/errorHandler.helper";
+import { formatYupErrors } from "../helpers/errorHandler.helper";
 
 export const validate = async (schema: any, args: any) => {
   try {
-    return await schema.validate(args, { abortEarly: false });
+    await schema.validate(args, { abortEarly: false });
+    return true;
   } catch (error) {
     return formatYupErrors(error);
   }

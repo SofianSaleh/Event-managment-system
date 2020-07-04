@@ -87,7 +87,7 @@ export default {
         return await userController.register(userInfo);
       } catch (e) {
         console.log(e.message);
-        return responseFormatter(false, e.message, null);
+        throw e;
       }
     },
 
