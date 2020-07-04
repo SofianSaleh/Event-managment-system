@@ -102,7 +102,7 @@ export default {
       }
     },
 
-    verifyUser: async (_: any, code: string, { req }: any) => {
+    verifyUser: async (_: any, { code }: { code: string }, { req }: any) => {
       try {
         if (!req.user)
           return {

@@ -95,7 +95,7 @@ class UserController {
           errors: [{ path: `User`, msg: `User already verified` }],
         };
 
-      user.is_verified;
+      user.is_verified = true;
       await user.save();
 
       return { success: true, user: user, errors: null };
