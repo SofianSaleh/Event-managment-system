@@ -13,7 +13,10 @@ export default {
     getUser: async (_: any, { id }: any, { req }: any) => {
       try {
         if (!req.user)
-          return responseFormatter(false, "Token is invalid", null);
+          return {
+            succes: false,
+            errors: [{ path: "Token", msg: "UnAuthorized" }],
+          };
 
         const user = await userController.getUser({ _id: id });
 
@@ -35,7 +38,10 @@ export default {
     getUserByUsername: async (_: any, username: string, { req }: any) => {
       try {
         if (!req.user)
-          return responseFormatter(false, "Token is invalid", null);
+          return {
+            succes: false,
+            errors: [{ path: "Token", msg: "UnAuthorized" }],
+          };
         const user = await userController.getUser({ username });
 
         if (!user)
@@ -72,7 +78,7 @@ export default {
           errors: [{ path: `Email`, msg: `Email doesn't exist` }],
         };
 
-      const valid = verifyPassword(user.password, password);
+      const valid = await verifyPassword(user.password, password);
       if (!valid)
         return {
           success: false,
@@ -85,7 +91,7 @@ export default {
 
       sendRefreshToken(res, refreshToken);
 
-      return { success: true, accessToken, errors: null };
+      return { success: true, token: accessToken, errors: null };
     },
     register: async (_: any, userInfo: UserInput) => {
       try {
@@ -99,11 +105,12 @@ export default {
     verifyUser: async (_: any, code: string, { req }: any) => {
       try {
         if (!req.user)
-          return responseFormatter(false, "Token is invalid", null);
+          return {
+            success: false,
+            errors: [{ path: "Token", msg: "UnAuthorized" }],
+          };
 
-        const user = await userController.verifyUser(req.user.user_id, code);
-
-        return user;
+        return await userController.verifyUser(req.user.user_id, code);
       } catch (e) {
         console.log(e.message);
         return responseFormatter(false, e.message, null);

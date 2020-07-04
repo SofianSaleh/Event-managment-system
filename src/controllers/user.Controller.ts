@@ -1,5 +1,4 @@
 import User from "../db/models/User.model";
-import { responseFormatter } from "../helpers/errorHandler.helper";
 import { validate } from "../validations/index.validation";
 import { regCredsValidation } from "../validations/regster.validation";
 import {
@@ -75,20 +74,31 @@ class UserController {
     try {
       const user = (await this.getUser({ _id: user_id })) as any;
 
-      if (!user) return responseFormatter(false, `User doesn't exist`, null);
+      if (!user)
+        return {
+          success: false,
+          user: null,
+          errors: [{ path: "User", msg: `User doesn't exist` }],
+        };
 
       if (user.code !== code)
-        return responseFormatter(false, `Code doesn't match`, null);
+        return {
+          success: false,
+          user: null,
+          errors: [{ path: `Code`, msg: `Code doesn't match` }],
+        };
 
       if (user.is_verified)
-        return responseFormatter(false, `User already verified`, null);
+        return {
+          success: false,
+          user: null,
+          errors: [{ path: `User`, msg: `User already verified` }],
+        };
 
       user.is_verified;
       await user.save();
 
-      return responseFormatter(true, `User was successfully verified`, {
-        user,
-      });
+      return { success: true, user: user, errors: null };
     } catch (e) {
       throw e;
     }
