@@ -3,10 +3,9 @@ import { v4 } from "uuid";
 
 export const hashPassword = async (password: string): Promise<string> => {
   try {
-    console.log(password);
     let salt: string = await genSalt(10);
     let hashedPassword: string = await hash(password, salt);
-    console.log(hashedPassword);
+
     return hashedPassword;
   } catch (e) {
     throw e;

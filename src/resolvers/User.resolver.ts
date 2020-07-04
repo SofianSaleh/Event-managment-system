@@ -29,7 +29,7 @@ export default {
         });
       } catch (e) {
         console.log(e);
-        throw e;
+        return responseFormatter(false, e.message, null);
       }
     },
     getUserByUsername: async (_: any, username: string, { req }: any) => {
@@ -52,7 +52,7 @@ export default {
         );
       } catch (e) {
         console.log(e);
-        throw e;
+        return responseFormatter(false, e.message, null);
       }
     },
     getAllUsers: async () => {},
@@ -84,24 +84,25 @@ export default {
     },
     register: async (_: any, userInfo: UserInput) => {
       try {
-        const newUser = userController.register(userInfo);
-        if (!newUser)
-          return responseFormatter(true, `User register unsuccessfull`, null);
-        return responseFormatter(true, `User registered successfully`, {
-          newUser,
-        });
+        return await userController.register(userInfo);
       } catch (e) {
         console.log(e.message);
-        throw e;
+        return responseFormatter(false, e.message, null);
       }
     },
 
     verifyUser: async (_: any, code: string, { req }: any) => {
-      if (!req.user) return responseFormatter(false, "Token is invalid", null);
+      try {
+        if (!req.user)
+          return responseFormatter(false, "Token is invalid", null);
 
-      const user = await userController.verifyUser(req.user.user_id, code);
+        const user = await userController.verifyUser(req.user.user_id, code);
 
-      return user;
+        return user;
+      } catch (e) {
+        console.log(e.message);
+        return responseFormatter(false, e.message, null);
+      }
     },
   },
 };

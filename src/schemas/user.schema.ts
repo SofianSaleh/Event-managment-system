@@ -45,12 +45,12 @@ export default gql`
     other: one
   }
   type one {
-    user: UserFetched!
+    user: UserFetched
   }
 
   type two {
-    accessToken: String!
-    user: UserFetched!
+    accessToken: String
+    user: UserFetched
   }
 
   type Mutation {

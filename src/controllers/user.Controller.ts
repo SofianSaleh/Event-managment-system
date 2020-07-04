@@ -20,7 +20,9 @@ class UserController {
   public async register(userInfo: any) {
     try {
       const isUser = await this.getUser({ email: userInfo.email });
-      if (isUser) return responseFormatter(false, `User already exists`, null);
+      console.log(isUser);
+      if (!!isUser)
+        return responseFormatter(false, `User already exists`, null);
 
       const hashedPassword = await hashPassword(userInfo.password);
       const code = generateValidationCode();
@@ -30,8 +32,8 @@ class UserController {
 
       const newUser = new User(userInfo);
       await newUser.save();
-
-      return newUser;
+      console.log(newUser);
+      return responseFormatter(true, `User register successfully`, newUser);
     } catch (e) {
       throw e;
     }
