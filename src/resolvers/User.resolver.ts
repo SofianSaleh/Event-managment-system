@@ -2,6 +2,7 @@ import userController from "../controllers/user.Controller";
 import { verifyPassword } from "../services/crypt.service";
 import { UserInput } from "../interfaces/User.interface";
 import { sendRefreshToken } from "../helpers/sendRefreshToken.helper";
+import { responseFormatter } from "../helpers/errorHandler.helper";
 import {
   createNormalToken,
   createRefreshToken,
@@ -12,7 +13,8 @@ export default {
     getUser: (_: any, id: string, { req }: any) => {
       try {
         console.log(req.userId);
-        if (req.userId) return null;
+        if (req.userId)
+          return responseFormatter(false, "Token is invalid", null);
         const user = userController.getUser({ id });
         if (!user) return null;
         console.log(user);
@@ -24,10 +26,22 @@ export default {
     },
     getUserByUsername: (_: any, username: string, { req }: any) => {
       try {
-        if (req.userId) return null;
+        if (req.userId)
+          return responseFormatter(false, "Token is invalid", null);
         const user = userController.getUser({ username });
-        if (!user) return null;
-        return user;
+
+        if (!user)
+          return responseFormatter(
+            false,
+            `User with username: ${username} was found`,
+            null
+          );
+
+        return responseFormatter(
+          true,
+          `User with username: ${username} was found`,
+          user
+        );
       } catch (e) {
         console.log(e);
         throw e;
@@ -42,31 +56,30 @@ export default {
       { res }: any
     ) => {
       const user = await userController.getUser({ email });
-      console.log(user);
-      if (!user) return { success: false, token: null, refresh: null };
+
+      if (!user)
+        return responseFormatter(
+          true,
+          `User with email: ${email} was found`,
+          user
+        );
 
       const valid = verifyPassword(user.password, password);
-      if (!valid) return { success: false, token: null, refresh: null };
+      if (!valid) return responseFormatter(true, `Password is incorrect`, user);
 
       const accessToken = createNormalToken(user.id);
       const refreshToken = createRefreshToken(user.id, user.count);
 
       sendRefreshToken(res, refreshToken);
 
-      return {
-        success: true,
-        token: accessToken,
-        refresh: null,
-      };
+      return responseFormatter(true, `Login successful`, accessToken);
     },
     register: async (_: any, userInfo: UserInput) => {
       try {
-        console.log(userInfo.password, "UserIndfo");
         const newUser = userController.register(userInfo);
-        return {
-          success: true,
-          user: newUser,
-        };
+        if (!newUser)
+          return responseFormatter(true, `User register unsuccessfull`, null);
+        return responseFormatter(true, `User registered successfully`, newUser);
       } catch (e) {
         console.log(e.message);
         throw e;
