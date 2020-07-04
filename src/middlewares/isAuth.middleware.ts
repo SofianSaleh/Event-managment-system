@@ -9,11 +9,13 @@ import { sendRefreshToken } from "../helpers/sendRefreshToken.helper";
 
 export const isAuth = (req: any, _res: any, next: any) => {
   const authorization = req.headers["authorization"];
+
   if (!authorization) return next();
   try {
     const token = authorization.split(" ")[1];
     const data = verifyAccessToken(token);
     req.user = data;
+
     return next();
   } catch (e) {
     return next();

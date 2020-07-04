@@ -10,7 +10,7 @@ import chalk from "chalk";
 import connectToDB from "./db/index.config";
 import cookieParser from "cookie-parser";
 
-import { refreshToken } from "./middlewares/isAuth.middleware";
+import { refreshToken, isAuth } from "./middlewares/isAuth.middleware";
 import { invalidateRefreshToken } from "./helpers/invalidateRefreshTokens.helper";
 
 dotenv.config();
@@ -39,7 +39,7 @@ const resolvers = mergeResolvers(resol);
       context: async ({ req, res }: any) => ({ req, res }),
     });
 
-    // app.use(isAuth);
+    app.use(isAuth);
 
     // app.use((req: any, _res: any, next) => {
     //   const accessToken = req.cookies["access-token"];

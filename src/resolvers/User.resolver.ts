@@ -10,37 +10,43 @@ import {
 
 export default {
   Query: {
-    getUser: (_: any, id: string, { req }: any) => {
+    getUser: async (_: any, { id }: any, { req }: any) => {
       try {
-        console.log(req.userId);
-        if (req.userId)
+        if (!req.user)
           return responseFormatter(false, "Token is invalid", null);
-        const user = userController.getUser({ id });
-        if (!user) return null;
-        console.log(user);
-        return user;
+        console.log(id);
+        const user = await userController.getUser({ _id: id });
+
+        if (!user)
+          return responseFormatter(
+            false,
+            `User with id: ${id} was not found`,
+            null
+          );
+
+        return responseFormatter(true, `User with id: ${id} was found`, null);
       } catch (e) {
         console.log(e);
         throw e;
       }
     },
-    getUserByUsername: (_: any, username: string, { req }: any) => {
+    getUserByUsername: async (_: any, username: string, { req }: any) => {
       try {
-        if (req.userId)
+        if (!req.user)
           return responseFormatter(false, "Token is invalid", null);
-        const user = userController.getUser({ username });
+        const user = await userController.getUser({ username });
 
         if (!user)
           return responseFormatter(
             false,
-            `User with username: ${username} was found`,
+            `User with username: ${username} was not found`,
             null
           );
 
         return responseFormatter(
           true,
           `User with username: ${username} was found`,
-          user
+          JSON.stringify(user)
         );
       } catch (e) {
         console.log(e);
@@ -61,11 +67,11 @@ export default {
         return responseFormatter(
           true,
           `User with email: ${email} was found`,
-          user
+          null
         );
 
       const valid = verifyPassword(user.password, password);
-      if (!valid) return responseFormatter(true, `Password is incorrect`, user);
+      if (!valid) return responseFormatter(true, `Password is incorrect`, null);
 
       const accessToken = createNormalToken(user.id);
       const refreshToken = createRefreshToken(user.id, user.count);
@@ -79,7 +85,11 @@ export default {
         const newUser = userController.register(userInfo);
         if (!newUser)
           return responseFormatter(true, `User register unsuccessfull`, null);
-        return responseFormatter(true, `User registered successfully`, newUser);
+        return responseFormatter(
+          true,
+          `User registered successfully`,
+          JSON.stringify(newUser)
+        );
       } catch (e) {
         console.log(e.message);
         throw e;
