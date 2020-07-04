@@ -10,48 +10,29 @@ export default gql`
     password: String!
     code: String
     is_verified: Boolean
+    count: Int!
   }
-  type UserFetched {
-    id: String
-    firstName: String!
-    lastName: String!
-    username: String
-    email: String
-    is_verified: Boolean
-    count: Int
-  }
+  
 
   type Query {
-    getUser(id: String): getResponse
-    getUserByUsername(username: String): getResponse
-    getAllUsers: getResponse
+    getUser(id: String): 
+    getUserByUsername(username: String): 
+    getAllUsers: 
   }
 
   type registerResponse {
-    success: Boolean!
-    msg: String!
-    other: one
-  }
+        success: Boolean!
+        user: User
+        errors: [Error!]
+    }
+    
+    type loginResponse {
+        success: Boolean!
+        token: String
+        errors: [Error!]
+    }
 
-  type loginResponse {
-    success: Boolean!
-    msg: String!
-    other: two
-  }
-
-  type getResponse {
-    success: Boolean!
-    msg: String!
-    other: one
-  }
-  type one {
-    user: UserFetched
-  }
-
-  type two {
-    accessToken: String
-    user: UserFetched
-  }
+    
 
   type Mutation {
     register(
