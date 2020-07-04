@@ -14,7 +14,7 @@ export default {
       try {
         if (!req.user)
           return responseFormatter(false, "Token is invalid", null);
-        console.log(id);
+
         const user = await userController.getUser({ _id: id });
 
         if (!user)
@@ -23,8 +23,10 @@ export default {
             `User with id: ${id} was not found`,
             null
           );
-
-        return responseFormatter(true, `User with id: ${id} was found`, null);
+        console.log(user);
+        return responseFormatter(true, `User with id: ${id} was found`, {
+          user,
+        });
       } catch (e) {
         console.log(e);
         throw e;
@@ -46,7 +48,7 @@ export default {
         return responseFormatter(
           true,
           `User with username: ${username} was found`,
-          JSON.stringify(user)
+          { user }
         );
       } catch (e) {
         console.log(e);
@@ -78,18 +80,16 @@ export default {
 
       sendRefreshToken(res, refreshToken);
 
-      return responseFormatter(true, `Login successful`, accessToken);
+      return responseFormatter(true, `Login successful`, { accessToken, user });
     },
     register: async (_: any, userInfo: UserInput) => {
       try {
         const newUser = userController.register(userInfo);
         if (!newUser)
           return responseFormatter(true, `User register unsuccessfull`, null);
-        return responseFormatter(
-          true,
-          `User registered successfully`,
-          JSON.stringify(newUser)
-        );
+        return responseFormatter(true, `User registered successfully`, {
+          newUser,
+        });
       } catch (e) {
         console.log(e.message);
         throw e;

@@ -7,7 +7,7 @@ export const createNormalToken = (id: string) => {
         user_id: id,
       },
       `${process.env.SECRET_1}`,
-      { expiresIn: "1m" }
+      { expiresIn: "1d" }
     );
     return accessToken;
   } catch (e) {

@@ -9,7 +9,7 @@ class UserController {
   public async getUser(anything: any) {
     try {
       const user = await User.findOne(anything);
-      console.log(user, "asdfasdfasdfasdf");
+
       return user;
     } catch (e) {
       throw e;
