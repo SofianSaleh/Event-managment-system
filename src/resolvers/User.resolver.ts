@@ -33,12 +33,14 @@ export default {
         console.log(user);
         return { success: true, user };
       } catch (e) {
+        console.log(e.message);
         return {
           success: false,
           errors: [{ path: "Get User", msg: `${e.message}` }],
         };
       }
     },
+
     getUserByUsername: async (_: any, username: string, { req }: any) => {
       if (!req.user)
         return {
@@ -67,6 +69,7 @@ export default {
         };
       }
     },
+
     getAllUsers: async (_: any, __: any, { req }: any) => {
       if (!req.user)
         return {
@@ -95,6 +98,7 @@ export default {
       }
     },
   },
+
   Mutation: {
     login: async (
       _: any,
@@ -125,6 +129,7 @@ export default {
 
       return { success: true, token: accessToken, errors: null };
     },
+
     register: async (_: any, userInfo: UserInput) => {
       try {
         return await userController.register(userInfo);
