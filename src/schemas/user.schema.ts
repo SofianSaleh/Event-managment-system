@@ -14,9 +14,15 @@ export default gql`
   }
 
   type Query {
-    getUser(id: String): User
-    getUserByUsername(username: String): User
+    getUser(id: String): registerResponse!
+    getUserByUsername(username: String): registerResponse!
     getAllUsers: [User!]
+  }
+
+  type allUsersResponse {
+    success: Boolean!
+    users: [User!]
+    errors: [Error!]
   }
 
   type registerResponse {

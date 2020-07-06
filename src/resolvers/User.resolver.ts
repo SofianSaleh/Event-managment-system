@@ -11,29 +11,18 @@ import {
 export default {
   Query: {
     getUser: async (_: any, { id }: any, { req }: any) => {
-      try {
-        if (!req.user)
-          return {
-            succes: false,
-            errors: [{ path: "Token", msg: "UnAuthorized" }],
-          };
+      if (!req.user)
+        return {
+          succes: false,
+          errors: [{ path: "Token", msg: "UnAuthorized" }],
+        };
 
-        const user = await userController.getUser({ _id: id });
+      const user = await userController.getUser({ _id: id });
 
-        if (!user)
-          return responseFormatter(
-            false,
-            `User with id: ${id} was not found`,
-            null
-          );
-        console.log(user);
-        return responseFormatter(true, `User with id: ${id} was found`, {
-          user,
-        });
-      } catch (e) {
-        console.log(e);
-        return responseFormatter(false, e.message, null);
-      }
+      if (!user) return null;
+
+      console.log(user);
+      return user;
     },
     getUserByUsername: async (_: any, username: string, { req }: any) => {
       try {
