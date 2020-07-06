@@ -27,6 +27,20 @@ class UserController {
     }
   }
 
+  public async updateUser(updateObj: any, id: string) {
+    try {
+      const updated = await User.findByIdAndUpdate(id, updateObj);
+      console.log(updated);
+
+      return {
+        success: true,
+        user: updated,
+      };
+    } catch (e) {
+      throw e;
+    }
+  }
+
   public async register(userInfo: any) {
     try {
       // * Validating the input

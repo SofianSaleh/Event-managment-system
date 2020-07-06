@@ -153,5 +153,27 @@ export default {
         return responseFormatter(false, e.message, null);
       }
     },
+
+    updateUser: async (_: any, { updateObj }: any, { req }: any) => {
+      if (!req.user)
+        return {
+          succes: false,
+          errors: [{ path: "Token", msg: "UnAuthorized" }],
+        };
+
+      try {
+        if (Object.values(updateObj).includes(null))
+          return {
+            success: false,
+            errors: [{ path: `Update User`, msg: `Nothing was updated` }],
+          };
+        return await userController.updateUser(updateObj, req.user.user_id);
+      } catch (e) {
+        return {
+          success: false,
+          errors: [{ path: "Get User", msg: `${e.message}` }],
+        };
+      }
+    },
   },
 };

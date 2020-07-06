@@ -37,6 +37,14 @@ export default gql`
     errors: [Error!]
   }
 
+  input updateObject {
+    firstName: String
+    lastName: String
+    username: String
+    email: String
+    password: String
+  }
+
   type Mutation {
     register(
       firstName: String
@@ -51,5 +59,7 @@ export default gql`
     login(email: String!, password: String!): loginResponse!
 
     verifyUser(code: String!): registerResponse!
+
+    updateUser(updateObj: updateObject!): registerResponse!
   }
 `;
