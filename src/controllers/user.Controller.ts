@@ -18,6 +18,15 @@ class UserController {
     }
   }
 
+  public async getAll() {
+    try {
+      const users = await User.find();
+      return users;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   public async register(userInfo: any) {
     try {
       // * Validating the input

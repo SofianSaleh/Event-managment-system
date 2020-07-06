@@ -16,7 +16,7 @@ export default gql`
   type Query {
     getUser(id: String): registerResponse!
     getUserByUsername(username: String): registerResponse!
-    getAllUsers: [User!]
+    getAllUsers: allUsersResponse!
   }
 
   type allUsersResponse {

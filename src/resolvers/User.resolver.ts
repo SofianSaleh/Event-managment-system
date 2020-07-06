@@ -16,41 +16,84 @@ export default {
           succes: false,
           errors: [{ path: "Token", msg: "UnAuthorized" }],
         };
+      try {
+        const user = await userController.getUser({ _id: id });
 
-      const user = await userController.getUser({ _id: id });
+        if (!user)
+          return {
+            success: false,
+            errors: [
+              {
+                path: "Get User",
+                msg: `Couldn't find a user with the id: ${id}`,
+              },
+            ],
+          };
 
-      if (!user) return null;
-
-      console.log(user);
-      return user;
+        console.log(user);
+        return { success: true, user };
+      } catch (e) {
+        return {
+          success: false,
+          errors: [{ path: "Get User", msg: `${e.message}` }],
+        };
+      }
     },
     getUserByUsername: async (_: any, username: string, { req }: any) => {
+      if (!req.user)
+        return {
+          succes: false,
+          errors: [{ path: "Token", msg: "UnAuthorized" }],
+        };
       try {
-        if (!req.user)
-          return {
-            succes: false,
-            errors: [{ path: "Token", msg: "UnAuthorized" }],
-          };
         const user = await userController.getUser({ username });
 
         if (!user)
-          return responseFormatter(
-            false,
-            `User with username: ${username} was not found`,
-            null
-          );
+          return {
+            success: false,
+            errors: [
+              {
+                path: "Get User",
+                msg: `Couldn't find a user with the username: ${username}`,
+              },
+            ],
+          };
 
-        return responseFormatter(
-          true,
-          `User with username: ${username} was found`,
-          { user }
-        );
+        return { success: true, user };
       } catch (e) {
-        console.log(e);
-        return responseFormatter(false, e.message, null);
+        return {
+          success: false,
+          errors: [{ path: "Get User", msg: `${e.message}` }],
+        };
       }
     },
-    getAllUsers: async () => {},
+    getAllUsers: async (_: any, __: any, { req }: any) => {
+      if (!req.user)
+        return {
+          succes: false,
+          errors: [{ path: "Token", msg: "UnAuthorized" }],
+        };
+
+      try {
+        const users = await userController.getAll();
+
+        if (users.length === 0)
+          return {
+            success: false,
+            errors: [{ path: "Get all users", msg: `No users are available` }],
+          };
+
+        return {
+          success: true,
+          users,
+        };
+      } catch (e) {
+        return {
+          success: false,
+          errors: [{ path: "Get User", msg: `${e.message}` }],
+        };
+      }
+    },
   },
   Mutation: {
     login: async (
