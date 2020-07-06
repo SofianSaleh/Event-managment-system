@@ -19,7 +19,7 @@ export const sendMail = async (info: {
     from: `${process.env.EMAIL_USER}`, // sender address
     to: `${info.email}`, // list of receivers
     subject: "Verify your account", // Subject line
-    html: `<h1 style="">Hello ${info.username}</h1>
+    html: `<h1 style="font-weight: bold; color: blue;>Hello ${info.username}</h1>
         <hr>
         <br>
         <h2>Please verify your account by entering this code in the box after you sign in<h2>
