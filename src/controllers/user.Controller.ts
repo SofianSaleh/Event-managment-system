@@ -1,6 +1,7 @@
 import User from "../db/models/User.model";
 import { validate } from "../validations/index.validation";
 import { regCredsValidation } from "../validations/regster.validation";
+import { sendMail } from "../services/email.service";
 import {
   hashPassword,
   generateValidationCode,
@@ -50,6 +51,15 @@ class UserController {
       // * Save the user to the DB
       const newUser = new User(userInfo);
       await newUser.save();
+
+      // * Send verification email to the user
+      const { success } = await sendMail({
+        email: newUser.email,
+        username: newUser.username,
+        code: newUser.code,
+      });
+
+      if (!success) return { success: false, user: null, errors: null };
 
       return { success: true, user: newUser, errors: null };
     } catch (e) {
