@@ -29,6 +29,28 @@ class UserController {
 
   public async updateUser(updateObj: any, id: string) {
     try {
+      // ! Extract to new function
+      if (updateObj.email) {
+        const isEmail = await this.getUser({ email: updateObj.email });
+        if (!!isEmail) {
+          return {
+            success: false,
+            user: null,
+            errors: [{ path: `Email`, msg: `Email Already Exists` }],
+          };
+        }
+        // ! if email doesn't exist make the user unverified and send email to the new email
+      }
+      if (updateObj.username) {
+        const isUsername = await this.getUser({ username: updateObj.username });
+        if (!!isUsername)
+          return {
+            success: false,
+            user: null,
+            errors: [{ path: `Username`, msg: `Username Already Exists` }],
+          };
+      }
+
       const updated = await User.findByIdAndUpdate(id, updateObj);
       console.log(updated);
 
