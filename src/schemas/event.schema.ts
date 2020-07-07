@@ -6,7 +6,7 @@ export default gql`
     title: String!
     description: String!
     date: String!
-    comments: [Comment]
+    comments: [Comment!]
     location: [Float!]
   }
 
@@ -57,6 +57,6 @@ export default gql`
     ): MutationResponse!
     updateEvent(id: String!, updateObj: UpdateInput!): MutationResponse!
     deleteEvent(eventId: String!): MutationResponse!
-    addComment(eventId: string, comment: String!): MutationResponse!
+    addComment(eventId: String, comment: String!): MutationResponse!
   }
 `;
