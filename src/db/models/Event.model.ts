@@ -26,8 +26,8 @@ const EventSchema: Schema = new Schema(
       type: Date,
     },
   },
-  { timestamps: { createdAt: true }, autoIndex: true }
-);
+  { timestamps: { createdAt: true } }
+).index({ title: "text", description: "text" });
 
 export interface EventProps extends Document {
   _id: string;
