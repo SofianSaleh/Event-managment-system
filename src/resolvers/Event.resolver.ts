@@ -1,5 +1,5 @@
 import eventController from "../controllers/event.controller";
-import chalk from "chalk";
+// import chalk from "chalk";
 
 export default {
   Query: {
@@ -102,11 +102,7 @@ export default {
         };
       }
     },
-    updateEvent: async (
-      _: any,
-      { id, updateObj }: { id: string; updateObj: any },
-      { req }: any
-    ) => {
+    updateEvent: async (_: any, { id, updateObj }: any, { req }: any) => {
       if (!req.user)
         return {
           success: false,
@@ -114,7 +110,7 @@ export default {
         };
 
       try {
-        console.log(chalk.yellow(id), chalk.red(updateObj));
+        // return { success: false };
         return await eventController.updateEvent(id, updateObj);
       } catch (e) {
         return {
@@ -123,7 +119,7 @@ export default {
         };
       }
     },
-    deleteEvent: async (_: any, __: any, { req }: any) => {
+    deleteEvent: async (_: any, { eventId }: any, { req }: any) => {
       if (!req.user)
         return {
           success: false,
@@ -131,7 +127,7 @@ export default {
         };
 
       try {
-        return null;
+        return await eventController.deleteEvent(eventId, req.user.user_id);
       } catch (e) {
         return {
           success: false,

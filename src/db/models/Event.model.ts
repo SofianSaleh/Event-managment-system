@@ -30,6 +30,7 @@ const EventSchema: Schema = new Schema(
 );
 
 export interface EventProps extends Document {
+  _id: string;
   title: string;
   description: string;
   comments: [

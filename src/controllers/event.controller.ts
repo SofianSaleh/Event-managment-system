@@ -2,6 +2,7 @@ import Event from "../db/models/Event.model";
 import { validate } from "../validations/index.validation";
 import { eventInput } from "../validations/event.validation";
 import userController from "./user.Controller";
+import User from "../db/models/User.model";
 
 class EventController {
   public async createEvent(eventInfo: any, id: string) {
@@ -24,12 +25,27 @@ class EventController {
   }
   public async updateEvent(id: string, updateObj: any) {
     try {
-      return await Event.findByIdAndDelete(id, updateObj);
+      const updated = await Event.findByIdAndUpdate(id, updateObj);
+
+      return { success: true, event: updated };
     } catch (e) {
       throw e;
     }
   }
-  public async deleteEvent() {}
+  public async deleteEvent(eventId: string, userId: string) {
+    try {
+      const event = await Event.findByIdAndDelete(eventId);
+      const user = await User.updateOne(
+        { _id: userId },
+        { $pull: { events: { _id: eventId } } }
+      );
+
+      console.log(user);
+      return { success: true, event };
+    } catch (e) {
+      throw e;
+    }
+  }
   public async getEventById() {}
   public async getEventTitle() {}
   public async getAllEvents() {}
