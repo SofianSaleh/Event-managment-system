@@ -135,7 +135,7 @@ export default {
         };
       }
     },
-    addComment: async (_: any, __: any, { req }: any) => {
+    addComment: async (_: any, { eventId, comment }: any, { req }: any) => {
       if (!req.user)
         return {
           success: false,
