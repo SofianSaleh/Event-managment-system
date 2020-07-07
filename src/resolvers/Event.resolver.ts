@@ -1,4 +1,5 @@
 import eventController from "../controllers/event.controller";
+import chalk from "chalk";
 
 export default {
   Query: {
@@ -101,7 +102,11 @@ export default {
         };
       }
     },
-    updateEvent: async (_: any, __: any, { req }: any) => {
+    updateEvent: async (
+      _: any,
+      { id, updateObj }: { id: string; updateObj: any },
+      { req }: any
+    ) => {
       if (!req.user)
         return {
           success: false,
@@ -109,7 +114,8 @@ export default {
         };
 
       try {
-        return null;
+        console.log(chalk.yellow(id), chalk.red(updateObj));
+        return await eventController.updateEvent(id, updateObj);
       } catch (e) {
         return {
           success: false,

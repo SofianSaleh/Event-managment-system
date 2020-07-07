@@ -22,7 +22,13 @@ class EventController {
       throw e;
     }
   }
-  public async updateEvent() {}
+  public async updateEvent(id: string, updateObj: any) {
+    try {
+      return await Event.findByIdAndDelete(id, updateObj);
+    } catch (e) {
+      throw e;
+    }
+  }
   public async deleteEvent() {}
   public async getEventById() {}
   public async getEventTitle() {}

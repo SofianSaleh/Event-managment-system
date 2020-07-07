@@ -55,7 +55,7 @@ export default gql`
       date: String!
       location: [Float!]
     ): MutationResponse!
-    updateEvent(updateObj: UpdateInput!): MutationResponse!
+    updateEvent(id: String!, updateObj: UpdateInput!): MutationResponse!
     deleteEvent(eventId: String!): MutationResponse!
     addComment(comment: String!): MutationResponse!
   }
