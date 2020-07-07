@@ -32,7 +32,7 @@ class UserController {
     try {
       // ! Extract to new function
       let check = await checkDuplication(updateObj.email, updateObj.username);
-
+      console.log(check.errors);
       if (!check.success)
         return { success: check.success, errors: check.errors };
 
@@ -40,7 +40,7 @@ class UserController {
         const code = generateValidationCode();
         updateObj.code = code;
         updateObj.is_verified = false;
-        sendMail({ email: updateObj.email, username: "", code });
+        await sendMail({ email: updateObj.email, username: "", code });
       }
       const updated = await User.findByIdAndUpdate(id, updateObj);
       console.log(updated);

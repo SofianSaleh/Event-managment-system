@@ -6,12 +6,12 @@ export const checkDuplication = async (email?: string, username?: string) => {
     if (email) {
       const emailExists = await userController.getUser({ email });
       if (!!emailExists)
-        errors.push([{ path: `Email`, msg: `Email Already Exists` }]);
+        errors.push({ path: `Email`, msg: `Email Already Exists` });
     }
     if (username) {
       const usernameExists = await userController.getUser({ username });
       if (!!usernameExists)
-        errors.push([{ path: `Username`, msg: `Username Already Exists` }]);
+        errors.push({ path: `Username`, msg: `Username Already Exists` });
     }
 
     return errors.length === 0
