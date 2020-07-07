@@ -12,7 +12,7 @@ export default gql`
 
   type Comment {
     comment: String!
-    user_id: String!
+    user_id: User!
   }
 
   type Query {

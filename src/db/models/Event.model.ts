@@ -1,4 +1,5 @@
 import { Schema, model, Document } from "mongoose";
+import { UserProps } from "./User.model";
 
 const EventSchema: Schema = new Schema(
   {
@@ -36,7 +37,7 @@ export interface EventProps extends Document {
   comments: [
     {
       comment: string;
-      user_id: string;
+      user_id: UserProps;
     }
   ];
   location: [string];

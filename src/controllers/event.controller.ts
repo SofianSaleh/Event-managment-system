@@ -94,7 +94,9 @@ class EventController {
   }
   public async addComment(eventId: string, comment: string, userId: string) {
     try {
-      let commentObj = { comment, user_id: userId };
+      const user = (await userController.getUser({ _id: userId })) as any;
+
+      let commentObj = { comment, user_id: user };
       const newComment = await Event.findById(eventId);
       newComment?.comments.push(commentObj);
       await newComment?.save();

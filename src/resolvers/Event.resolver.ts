@@ -143,7 +143,11 @@ export default {
         };
 
       try {
-        return null;
+        return await eventController.addComment(
+          eventId,
+          comment,
+          req.user.user_id
+        );
       } catch (e) {
         return {
           success: false,
