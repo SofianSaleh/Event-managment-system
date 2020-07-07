@@ -1,7 +1,12 @@
 import Event from "../db/models/Event.model";
 
 class EventController {
-  public async createEvent() {}
+  public async createEvent(eventInfo: any) {
+    try {
+    } catch (e) {
+      throw e;
+    }
+  }
   public async updateEvent() {}
   public async deleteEvent() {}
   public async getEventById() {}
