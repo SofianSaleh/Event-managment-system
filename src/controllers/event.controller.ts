@@ -65,13 +65,16 @@ class EventController {
   public async searchEvent(searchTerm: string) {
     try {
       const events = await Event.find({
-        $text: { $search: `\`${searchTerm}\`` },
+        $text: { $search: `${searchTerm}` },
       });
       if (!event)
         return {
           success: false,
           errors: [
-            { path: `Get event`, msg: `No event found with this id: ${id}` },
+            {
+              path: `Get event`,
+              msg: `No event found with this term: ${searchTerm}`,
+            },
           ],
         };
 
