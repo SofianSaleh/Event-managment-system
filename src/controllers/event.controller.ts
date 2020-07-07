@@ -3,7 +3,7 @@ import { validate } from "../validations/index.validation";
 import { eventInput } from "../validations/event.validation";
 import userController from "./user.Controller";
 import User from "../db/models/User.model";
-import chalk from "chalk";
+// import chalk from "chalk";
 
 class EventController {
   public async createEvent(eventInfo: any, id: string) {
@@ -65,12 +65,11 @@ class EventController {
   }
   public async searchEvent(searchTerm: string) {
     try {
-      console.log(searchTerm);
       const events = await Event.find({
-        $text: { $search: `\`${searchTerm}\`` },
+        $text: { $search: `\"${searchTerm}\"` },
       });
-      console.log(chalk.red(events));
-      if (!event)
+
+      if (!events)
         return {
           success: false,
           errors: [
