@@ -46,8 +46,8 @@ class EventController {
       throw e;
     }
   }
-  public async getEventById() {}
-  public async getEventTitle() {}
+  public async getEvent() {}
+  public async searchEvent() {}
   public async getAllEvents() {}
   public async addComment() {}
   public async getEventsBasedOnAUser() {}
