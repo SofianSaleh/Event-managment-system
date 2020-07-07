@@ -94,10 +94,15 @@ class EventController {
   }
   public async addComment(eventId: string, comment: string, userId: string) {
     try {
-      let commentObj = { comment, user_id: userId };
-      const newComment = await Event.findById(eventId);
-      newComment?.comments.push(commentObj);
-      await newComment?.save();
+      const user = userController.getUser({ _id: userId }) as any;
+      const { success, errors, event } = await this.getEvent(eventId);
+
+      if (!success) return { success, errors };
+      event?.comments.push({ comment, user_id: user });
+
+      await event?.save();
+
+      return { success: true, event };
     } catch (e) {
       throw e;
     }
