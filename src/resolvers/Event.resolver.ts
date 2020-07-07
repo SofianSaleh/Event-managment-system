@@ -1,4 +1,4 @@
-import eventController from "src/controllers/event.controller";
+import eventController from "../controllers/event.controller";
 
 export default {
   Query: {
@@ -93,7 +93,7 @@ export default {
         };
 
       try {
-        return await eventController.createEvent(eventInfo, req.user.userId);
+        return await eventController.createEvent(eventInfo, req.user.user_id);
       } catch (e) {
         return {
           success: false,

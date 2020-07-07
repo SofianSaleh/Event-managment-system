@@ -1,6 +1,6 @@
 import Event from "../db/models/Event.model";
 import { validate } from "../validations/index.validation";
-import { eventInput } from "src/validations/event.validation";
+import { eventInput } from "../validations/event.validation";
 import userController from "./user.Controller";
 
 class EventController {
@@ -10,15 +10,14 @@ class EventController {
       if (Array.isArray(eventValidation))
         return { success: false, errors: eventValidation };
 
-      const event = new Event(eventInfo);
+      const newEvent = new Event(eventInfo);
       const user = (await userController.getUser({ _id: id })) as any;
 
-      user.events.push(event);
+      user.events.push(newEvent);
 
       await user.save();
-      await event.save();
-
-      return { success: true, event };
+      await newEvent.save();
+      return { success: true, event: newEvent };
     } catch (e) {
       throw e;
     }

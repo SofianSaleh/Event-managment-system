@@ -3,6 +3,7 @@ import { validate } from "../validations/index.validation";
 import { regCredsValidation } from "../validations/regster.validation";
 import { sendMail } from "../services/email.service";
 import { checkDuplication } from "../helpers/verifyEmailUsername.helper";
+import chalk from "chalk";
 import {
   hashPassword,
   generateValidationCode,
@@ -11,8 +12,8 @@ import {
 class UserController {
   public async getUser(anything: any) {
     try {
-      const user = await User.findOne(anything);
-
+      const user = await User.findOne(anything).populate("events");
+      console.log(chalk.blue(user));
       return user;
     } catch (e) {
       throw e;

@@ -8,7 +8,7 @@ export default gql`
     username: String!
     email: String!
     password: String!
-    events: [Event]
+    events: [Event!]
     code: String
     is_verified: Boolean
     count: Int!

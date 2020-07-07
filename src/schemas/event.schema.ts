@@ -37,7 +37,7 @@ export default gql`
 
   type MutationResponse {
     success: Boolean!
-    events: [Event!]
+    event: Event
     errors: [Error!]
   }
 
