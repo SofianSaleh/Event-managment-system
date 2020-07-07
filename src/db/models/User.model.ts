@@ -35,6 +35,11 @@ const UserSchema: Schema = new Schema(
       default: 0,
     },
 
+    events: {
+      type: [Schema.Types.ObjectId],
+      ref: "Event",
+    },
+
     code: {
       type: String,
     },
