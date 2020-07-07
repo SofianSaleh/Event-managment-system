@@ -2,6 +2,7 @@ import User from "../db/models/User.model";
 import { validate } from "../validations/index.validation";
 import { regCredsValidation } from "../validations/regster.validation";
 import { sendMail } from "../services/email.service";
+import { checkDuplication } from "../helpers/verifyEmailUsername.helper";
 import {
   hashPassword,
   generateValidationCode,
@@ -30,27 +31,17 @@ class UserController {
   public async updateUser(updateObj: any, id: string) {
     try {
       // ! Extract to new function
-      if (updateObj.email) {
-        const isEmail = await this.getUser({ email: updateObj.email });
-        if (!!isEmail) {
-          return {
-            success: false,
-            user: null,
-            errors: [{ path: `Email`, msg: `Email Already Exists` }],
-          };
-        }
-        // ! if email doesn't exist make the user unverified and send email to the new email
-      }
-      if (updateObj.username) {
-        const isUsername = await this.getUser({ username: updateObj.username });
-        if (!!isUsername)
-          return {
-            success: false,
-            user: null,
-            errors: [{ path: `Username`, msg: `Username Already Exists` }],
-          };
-      }
+      let check = await checkDuplication(updateObj.email, updateObj.username);
 
+      if (!check.success)
+        return { success: check.success, errors: check.errors };
+
+      if (updateObj.email) {
+        const code = generateValidationCode();
+        updateObj.code = code;
+        updateObj.is_verified = false;
+        sendMail({ email: updateObj.email, username: "", code });
+      }
       const updated = await User.findByIdAndUpdate(id, updateObj);
       console.log(updated);
 
@@ -71,22 +62,10 @@ class UserController {
         return { success: false, user: null, errors: regSchemaVal };
 
       // * Checking if the username or email already exists
+      let check = await checkDuplication(userInfo.email, userInfo.username);
 
-      const isEmail = await this.getUser({ email: userInfo.email });
-      if (!!isEmail)
-        return {
-          success: false,
-          user: null,
-          errors: [{ path: `Email`, msg: `Email Already Exists` }],
-        };
-
-      const isUsername = await this.getUser({ username: userInfo.username });
-      if (!!isUsername)
-        return {
-          success: false,
-          user: null,
-          errors: [{ path: `Username`, msg: `Username Already Exists` }],
-        };
+      if (!check.success)
+        return { success: check.success, errors: check.errors };
 
       // * Hash the password
       let hashedPassword = await hashPassword(userInfo.password);
