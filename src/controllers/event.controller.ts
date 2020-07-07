@@ -94,7 +94,7 @@ class EventController {
   }
   public async addComment(eventId: string, comment: string, userId: string) {
     try {
-      const user = userController.getUser({ _id: userId }) as any;
+      const user = (await userController.getUser({ _id: userId })) as any;
       const { success, errors, event } = await this.getEvent(eventId);
 
       if (!success) return { success, errors };

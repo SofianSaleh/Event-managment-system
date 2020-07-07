@@ -11,6 +11,7 @@ export default gql`
   }
 
   type Comment {
+    _id: String
     comment: String!
     user_id: User!
   }
