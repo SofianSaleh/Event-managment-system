@@ -26,7 +26,7 @@ const EventSchema: Schema = new Schema(
       type: Date,
     },
   },
-  { timestamps: { createdAt: true } }
+  { timestamps: { createdAt: true }, autoIndex: true }
 );
 
 export interface EventProps extends Document {
@@ -44,6 +44,7 @@ export interface EventProps extends Document {
 }
 
 const Event = model<EventProps>("Event", EventSchema);
+
 export default Event;
 
 // const pointSchema:Schema = new Schema({

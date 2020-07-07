@@ -10,7 +10,7 @@ class EventController {
       let eventValidation = await validate(eventInput, eventInfo);
       if (Array.isArray(eventValidation))
         return { success: false, errors: eventValidation };
-
+      await Event.createIndex({ name: "text", description: "text" });
       const newEvent = new Event(eventInfo);
       const user = (await userController.getUser({ _id: id })) as any;
 
@@ -64,8 +64,9 @@ class EventController {
   }
   public async searchEvent(searchTerm: string) {
     try {
+      console.log(searchTerm);
       const events = await Event.find({
-        $text: { $search: `${searchTerm}` },
+        $text: { $search: searchTerm },
       });
       if (!event)
         return {
