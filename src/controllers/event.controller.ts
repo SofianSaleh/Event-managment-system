@@ -46,7 +46,22 @@ class EventController {
       throw e;
     }
   }
-  public async getEvent() {}
+  public async getEvent(id: string) {
+    try {
+      const event = await Event.findById(id);
+      if (!event)
+        return {
+          success: false,
+          errors: [
+            { path: `Get event`, msg: `No event found with this id: ${id}` },
+          ],
+        };
+
+      return { success: true, event };
+    } catch (e) {
+      throw e;
+    }
+  }
   public async searchEvent() {}
   public async getAllEvents() {}
   public async addComment() {}

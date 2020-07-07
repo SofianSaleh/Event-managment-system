@@ -16,8 +16,8 @@ export default gql`
   }
 
   type Query {
-    getEventById(id: String!): QueryResponse!
-    getEventByTitle(title: String!): GetMultipleEvents!
+    getEvent(id: String!): QueryResponse!
+    seachEvent(title: String!): GetMultipleEvents!
     getAllEvents: GetMultipleEvents!
     getEventsBasedOnAUser(username: String, id: String): GetMultipleEvents!
     getEventsInAnArea: GetMultipleEvents!

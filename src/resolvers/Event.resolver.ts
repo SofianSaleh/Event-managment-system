@@ -3,7 +3,7 @@ import eventController from "../controllers/event.controller";
 
 export default {
   Query: {
-    getEventById: async (_: any, __: any, { req }: any) => {
+    getEvent: async (_: any, { id }: { id: string }, { req }: any) => {
       if (!req.user)
         return {
           success: false,
@@ -11,7 +11,7 @@ export default {
         };
 
       try {
-        return req.body;
+        return await eventController.getEvent(id);
       } catch (e) {
         return {
           success: false,
@@ -19,7 +19,7 @@ export default {
         };
       }
     },
-    getEventByTitle: async (_: any, __: any, { req }: any) => {
+    searchEvent: async (_: any, __: any, { req }: any) => {
       if (!req.user)
         return {
           success: false,
