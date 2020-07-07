@@ -3,7 +3,6 @@ import { validate } from "../validations/index.validation";
 import { eventInput } from "../validations/event.validation";
 import userController from "./user.Controller";
 import User from "../db/models/User.model";
-import chalk from "chalk";
 // import chalk from "chalk";
 
 class EventController {
@@ -50,7 +49,7 @@ class EventController {
   }
   public async getEvent(id: string) {
     try {
-      const event = await Event.findById(id);
+      const event = await Event.findById(id).populate("comments.user_id");
       if (!event)
         return {
           success: false,
@@ -95,18 +94,10 @@ class EventController {
   }
   public async addComment(eventId: string, comment: string, userId: string) {
     try {
-      const user = (await userController.getUser({ _id: userId })) as any;
-      console.log(chalk.green(user));
-
-      const { success, errors, event } = await this.getEvent(eventId);
-
-      if (!success) return { success, errors };
-
-      event?.comments.push({ comment, user_id: user });
-      event?.save();
-      console.log(chalk.yellow(event?.comments));
-
-      return { success: true, event };
+      let commentObj = { comment, user_id: userId };
+      const newComment = await Event.findById(eventId);
+      newComment?.comments.push(commentObj);
+      await newComment?.save();
     } catch (e) {
       throw e;
     }
