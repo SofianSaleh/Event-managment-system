@@ -62,7 +62,24 @@ class EventController {
       throw e;
     }
   }
-  public async searchEvent() {}
+  public async searchEvent(searchTerm: string) {
+    try {
+      const events = await Event.find({
+        $text: { $search: `\`${searchTerm}\`` },
+      });
+      if (!event)
+        return {
+          success: false,
+          errors: [
+            { path: `Get event`, msg: `No event found with this id: ${id}` },
+          ],
+        };
+
+      return { success: true, events };
+    } catch (e) {
+      throw e;
+    }
+  }
   public async getAllEvents() {}
   public async addComment() {}
   public async getEventsBasedOnAUser() {}

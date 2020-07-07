@@ -19,7 +19,7 @@ export default {
         };
       }
     },
-    searchEvent: async (_: any, __: any, { req }: any) => {
+    searchEvent: async (_: any, { searchTerm }: any, { req }: any) => {
       if (!req.user)
         return {
           success: false,
@@ -27,7 +27,7 @@ export default {
         };
 
       try {
-        return req.body;
+        return await eventController.searchEvent(searchTerm);
       } catch (e) {
         return {
           success: false,
