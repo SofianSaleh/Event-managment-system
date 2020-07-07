@@ -57,6 +57,6 @@ export default gql`
     ): MutationResponse!
     updateEvent(id: String!, updateObj: UpdateInput!): MutationResponse!
     deleteEvent(eventId: String!): MutationResponse!
-    addComment(comment: String!): MutationResponse!
+    addComment(eventId: string, comment: String!): MutationResponse!
   }
 `;

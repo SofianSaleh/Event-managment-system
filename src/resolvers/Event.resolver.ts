@@ -43,7 +43,7 @@ export default {
         };
 
       try {
-        return req.body;
+        return await eventController.getAllEvents();
       } catch (e) {
         return {
           success: false,

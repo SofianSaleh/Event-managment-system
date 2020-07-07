@@ -8,6 +8,8 @@
 
 ## Update Event function Done!!
 
-## Get event functions
+## Get event functions Done!!
 
-## Get multiple events function
+## Get multiple events function Done!!
+
+## Simple Event search Done!!

@@ -85,8 +85,25 @@ class EventController {
       throw e;
     }
   }
-  public async getAllEvents() {}
-  public async addComment() {}
+  public async getAllEvents() {
+    try {
+      return { success: true, events: await Event.find() };
+    } catch (e) {
+      throw e;
+    }
+  }
+  public async addComment(eventId: string, comment: string, userId: string) {
+    try {
+      let commentObj = { comment, user_id: userId };
+      const newComment = await Event.findById(eventId);
+      newComment?.comments.push(commentObj);
+      await newComment?.save();
+
+      return { success: true, event: newComment };
+    } catch (e) {
+      throw e;
+    }
+  }
   public async getEventsBasedOnAUser() {}
   public async getEventsInAnArea() {}
 }
