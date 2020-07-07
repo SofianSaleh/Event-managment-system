@@ -5,50 +5,58 @@ export default gql`
     id: String!
     title: String!
     description: String!
-    location: String!
     date: String!
-    comments: Comment
+    comments: [Comment]
     location: [Float!]
   }
 
+  type Comment {
+    comment: String!
+    user_id: String!
+  }
+
   type Query {
-    getEventById(id: string!): QueryResponse!
-    getEventByTitle(title:string!): GetMultipleEvents!
+    getEventById(id: String!): QueryResponse!
+    getEventByTitle(title: String!): GetMultipleEvents!
     getAllEvents: GetMultipleEvents!
-    getEventsBasedOnAUser(username?:string, id: string): GetMultipleEvents!
-    getEventsInAnArea(): GetMultipleEvents!
+    getEventsBasedOnAUser(username: String, id: String): GetMultipleEvents!
+    getEventsInAnArea: GetMultipleEvents!
   }
 
   type QueryResponse {
-      success: Boolean!
-      event: Event
-      errors: [Error!]
+    success: Boolean!
+    event: Event
+    errors: [Error!]
   }
 
   type GetMultipleEvents {
-      success: Boolean!
-      events: [Event!]
-      errors: [Error!]
+    success: Boolean!
+    events: [Event!]
+    errors: [Error!]
   }
 
   type MutationResponse {
-      success: Boolean!
-      events: [Event!]
-      errors: [Error!]
+    success: Boolean!
+    events: [Event!]
+    errors: [Error!]
   }
 
   input UpdateInput {
     title: String
     description: String
-    location: String
     date: String
     location: [Float!]
   }
 
   type Mutation {
-      createEvent(title: String!, description: String!, date: String!, location: [Float!]): MutationResponse!
-      updateEvent(updateObj: UpdateInput!): MutationResponse!
-      deleteEvent(eventId: String!): MutationResponse!
-      addComment(comment: string!): MutationResponse!
+    createEvent(
+      title: String!
+      description: String!
+      date: String!
+      location: [Float!]
+    ): MutationResponse!
+    updateEvent(updateObj: UpdateInput!): MutationResponse!
+    deleteEvent(eventId: String!): MutationResponse!
+    addComment(comment: String!): MutationResponse!
   }
 `;

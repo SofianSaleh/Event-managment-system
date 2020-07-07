@@ -29,7 +29,7 @@ const EventSchema: Schema = new Schema(
   { timestamps: { createdAt: true } }
 );
 
-interface EventProps extends Document {
+export interface EventProps extends Document {
   title: string;
   description: string;
   comments: [

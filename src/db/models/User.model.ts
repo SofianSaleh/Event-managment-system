@@ -1,4 +1,5 @@
 import { Schema, model, Document } from "mongoose";
+import { EventProps } from "./Event.model";
 
 const UserSchema: Schema = new Schema(
   {
@@ -60,6 +61,7 @@ interface UserProps extends Document {
   gender: string;
   code: string;
   count: number;
+  events: [EventProps];
 }
 
 const User = model<UserProps>("User", UserSchema);
