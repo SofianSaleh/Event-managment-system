@@ -12,6 +12,9 @@ const EventSchema: Schema = new Schema(
 
     comments: [
       {
+        id: {
+          type: Schema.Types.ObjectId,
+        },
         comment: {
           type: String,
           required: true,
