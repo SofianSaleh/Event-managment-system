@@ -107,10 +107,16 @@ class EventController {
       throw e;
     }
   }
-  public removeComment(comment_id: string) {
+  public async removeComment(comment_id: string, event_id: string) {
     try {
       console.log(comment_id);
-      // const comment = await Event.findOneAndDelete({comment:})
+      const { success, errors, event } = await this.getEvent(event_id);
+      if (!success) return { success, errors };
+
+      event?.comments.filter((comment) => comment._id !== comment_id);
+      await event?.save();
+
+      return { success: true, event };
     } catch (e) {
       throw e;
     }

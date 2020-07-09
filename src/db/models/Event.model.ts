@@ -10,22 +10,19 @@ const EventSchema: Schema = new Schema(
       type: String,
     },
 
-    comments: [
-      {
-        id: {
-          type: Schema.Types.ObjectId,
-        },
-        comment: {
-          type: String,
-          required: true,
-        },
-        user_id: {
-          type: Schema.Types.ObjectId,
-          ref: "User",
-          required: true,
-        },
-      },
-    ],
+    // comments: [
+    //   {
+    //     comment: {
+    //       type: String,
+    //       required: true,
+    //     },
+    //     user_id: {
+    //       type: Schema.Types.ObjectId,
+    //       ref: "User",
+    //       required: true,
+    //     },
+    //   },
+    // ],
     location: { type: [Number], index: { type: "2dsphere", sparse: true } },
     date: {
       type: Date,
@@ -38,12 +35,13 @@ export interface EventProps extends Document {
   _id: string;
   title: string;
   description: string;
-  comments: [
-    {
-      comment: string;
-      user_id: UserProps;
-    }
-  ];
+  // comments: [
+  //   {
+  //     _id: string;
+  //     comment: string;
+  //     user_id: UserProps;
+  //   }
+  // ];
   location: [string];
   date: Date;
 }
