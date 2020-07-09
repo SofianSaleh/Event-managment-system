@@ -10,12 +10,6 @@ export default gql`
     location: [Float!]
   }
 
-  type Comment {
-    _id: String
-    comment: String!
-    user_id: User!
-  }
-
   type Query {
     getEvent(id: String!): QueryResponse!
     searchEvent(searchTerm: String!): GetMultipleEvents!
@@ -58,7 +52,5 @@ export default gql`
     ): MutationResponse!
     updateEvent(id: String!, updateObj: UpdateInput!): MutationResponse!
     deleteEvent(eventId: String!): MutationResponse!
-    addComment(eventId: String, comment: String!): MutationResponse!
-    removeComment(comment_id: String!): MutationResponse!
   }
 `;
