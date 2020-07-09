@@ -107,13 +107,13 @@ class EventController {
       throw e;
     }
   }
-  public removeComment(comment_id:string) {
+  public removeComment(comment_id: string) {
     try {
-      const comment = await Event.findOneAndDelete({comment:})
+      console.log(comment_id);
+      // const comment = await Event.findOneAndDelete({comment:})
     } catch (e) {
-      throw e
+      throw e;
     }
-    
   }
   public async getEventsBasedOnAUser() {}
   public async getEventsInAnArea() {}
