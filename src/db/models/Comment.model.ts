@@ -1,5 +1,4 @@
 import { Schema, model, Document } from "mongoose";
-import { EventProps } from "./Event.model";
 import { UserProps } from "./User.model";
 
 const CommentSchema: Schema = new Schema(
@@ -14,7 +13,7 @@ const CommentSchema: Schema = new Schema(
     },
   },
   { timestamps: { createdAt: true } }
-);
+).index({ comment: "text" });
 
 export interface CommentProps extends Document {
   comment: string;

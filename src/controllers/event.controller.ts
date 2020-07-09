@@ -92,35 +92,7 @@ class EventController {
       throw e;
     }
   }
-  public async addComment(eventId: string, comment: string, userId: string) {
-    try {
-      const user = (await userController.getUser({ _id: userId })) as any;
-      const { success, errors, event } = await this.getEvent(eventId);
 
-      if (!success) return { success, errors };
-      event?.comments.push({ comment, user_id: user });
-
-      await event?.save();
-
-      return { success: true, event };
-    } catch (e) {
-      throw e;
-    }
-  }
-  public async removeComment(comment_id: string, event_id: string) {
-    try {
-      console.log(comment_id);
-      const { success, errors, event } = await this.getEvent(event_id);
-      if (!success) return { success, errors };
-
-      event?.comments.filter((comment) => comment._id !== comment_id);
-      await event?.save();
-
-      return { success: true, event };
-    } catch (e) {
-      throw e;
-    }
-  }
   public async getEventsBasedOnAUser() {}
   public async getEventsInAnArea() {}
 }

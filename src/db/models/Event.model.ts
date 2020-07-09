@@ -1,5 +1,5 @@
 import { Schema, model, Document } from "mongoose";
-import { UserProps } from "./User.model";
+import { CommentProps } from "./Comment.model";
 
 const EventSchema: Schema = new Schema(
   {
@@ -10,19 +10,13 @@ const EventSchema: Schema = new Schema(
       type: String,
     },
 
-    // comments: [
-    //   {
-    //     comment: {
-    //       type: String,
-    //       required: true,
-    //     },
-    //     user_id: {
-    //       type: Schema.Types.ObjectId,
-    //       ref: "User",
-    //       required: true,
-    //     },
-    //   },
-    // ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
+
     location: { type: [Number], index: { type: "2dsphere", sparse: true } },
     date: {
       type: Date,
@@ -35,13 +29,7 @@ export interface EventProps extends Document {
   _id: string;
   title: string;
   description: string;
-  // comments: [
-  //   {
-  //     _id: string;
-  //     comment: string;
-  //     user_id: UserProps;
-  //   }
-  // ];
+  comments: [CommentProps];
   location: [string];
   date: Date;
 }
