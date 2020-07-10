@@ -8,8 +8,10 @@ export default gql`
   }
 
   type Query {
-    getFollower(comment_id: String!): FollowResponse!
-    getFollowing(eventId: String!): FollowResponse!
+    getYourFollower FollowResponse!
+    getYourFollowing: FollowResponse!
+    getFollower FollowResponse!
+    getFollowing: FollowResponse!
   }
 
   type FollowResponse {
