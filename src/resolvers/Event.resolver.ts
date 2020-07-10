@@ -135,25 +135,5 @@ export default {
         };
       }
     },
-    addComment: async (_: any, { eventId, comment }: any, { req }: any) => {
-      if (!req.user)
-        return {
-          success: false,
-          errors: [{ path: "Token", msg: "UnAuthorized" }],
-        };
-
-      try {
-        return await eventController.addComment(
-          eventId,
-          comment,
-          req.user.user_id
-        );
-      } catch (e) {
-        return {
-          success: false,
-          errors: [{ path: "Event Resolvers", msg: `${e.message}` }],
-        };
-      }
-    },
   },
 };
