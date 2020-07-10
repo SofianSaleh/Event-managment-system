@@ -8,8 +8,8 @@ export default gql`
   }
 
   type Query {
-    getFollowers(user_id: String!): FollowResponse!
-    getFollowings(user_id: String!): FollowResponse!
+    getFollowers(user_id: String): FollowResponse!
+    getFollowings(user_id: String): FollowResponse!
   }
 
   type FollowResponse {
