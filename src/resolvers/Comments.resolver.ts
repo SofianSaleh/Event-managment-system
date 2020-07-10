@@ -58,5 +58,30 @@ export default {
         };
       }
     },
+
+    removeComment: async (
+      _: any,
+      { comment_id, event_id }: { comment_id: string; event_id: string },
+      { req }: any
+    ) => {
+      if (!req.user)
+        return {
+          success: false,
+          errors: [{ path: "Token", msg: "UnAuthorized" }],
+        };
+
+      try {
+        return await commentController.removeComment(
+          comment_id,
+          event_id,
+          req.user.user_id
+        );
+      } catch (e) {
+        return {
+          success: false,
+          errors: [{ path: "Event Resolvers", msg: `${e.message}` }],
+        };
+      }
+    },
   },
 };

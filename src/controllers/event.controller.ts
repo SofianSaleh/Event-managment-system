@@ -3,6 +3,7 @@ import { validate } from "../validations/index.validation";
 import { eventInput } from "../validations/event.validation";
 import userController from "./user.Controller";
 import User from "../db/models/User.model";
+import chalk from "chalk";
 // import chalk from "chalk";
 
 class EventController {
@@ -49,7 +50,8 @@ class EventController {
   }
   public async getEvent(id: string) {
     try {
-      const event = await Event.findById(id).populate("comments.user_id");
+      const event = await Event.findById(id).populate("comments");
+      console.log(chalk.red(event?.comments));
       if (!event)
         return {
           success: false,
