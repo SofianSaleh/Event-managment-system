@@ -1,4 +1,3 @@
-import commentController from "../controllers/comments.controller";
 import followController from "src/controllers/follow.controller";
 // import chalk from "chalk";
 

@@ -45,7 +45,7 @@ class FollowController {
       const newFollow = new Follow({ follower, following });
       await newFollow.save();
 
-      return { success: true user: newFollow};
+      return { success: true, user: newFollow};
     } catch (e) {
       throw e;
     }
