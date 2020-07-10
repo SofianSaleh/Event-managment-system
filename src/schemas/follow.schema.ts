@@ -8,16 +8,18 @@ export default gql`
   }
 
   type Query {
-    getFollower(comment_id: String!): QueryResponse!
-    getFollowing(eventId: String!): QueryResponse!
+    getFollower(comment_id: String!): FollowResponse!
+    getFollowing(eventId: String!): FollowResponse!
   }
 
-  type FollowQueryResponse {
+  type FollowResponse {
     success: Boolean!
+    users: [User!]
+    errors: [Error!]
   }
 
   type Mutation {
-    follow(eventId: String, comment: String!): MutationResponse!
-    unfollow(comment_id: String!, event_id: String!): MutationResponse!
+    follow(following_id: String): FollowResponse!
+    unfollow(following_id: String!): FollowResponse!
   }
 `;
