@@ -3,7 +3,7 @@ import followController from "../controllers/follow.controller";
 
 export default {
   Query: {
-    getYourFollowers: async (_: any, __: any, { req }: any) => {
+    getYourFollowers: async (_: any, { user_id }: any, { req }: any) => {
       if (!req.user)
         return {
           success: false,
@@ -11,7 +11,13 @@ export default {
         };
 
       try {
-        return followController.getYourFollowers(req.user.user_id);
+        let obj = { following: "" };
+        if (!user_id) {
+          obj.following = req.user.user_id;
+        } else if (!!user_id) {
+          obj.following = user_id;
+        }
+        return followController.getYourFollowers(obj);
       } catch (e) {
         return {
           success: false,
@@ -88,6 +94,7 @@ export default {
         };
 
       try {
+        console.log(following_id);
         return await followController.followUser(
           req.user.user_id,
           following_id
