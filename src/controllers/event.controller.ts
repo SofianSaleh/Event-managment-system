@@ -50,8 +50,18 @@ class EventController {
   }
   public async getEvent(id: string) {
     try {
-      const event = await Event.findById(id).populate("comments");
-      console.log(chalk.red(event?));
+      const event = await Event.findById(id).populate(
+        {
+          path: "comments",
+          model: "Comment",
+          populate: {
+            path: "user",
+            model: "User",
+          },
+        }
+        // "comments.user"
+      );
+      console.log(chalk.red(event));
       if (!event)
         return {
           success: false,
