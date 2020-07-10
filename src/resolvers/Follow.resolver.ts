@@ -81,7 +81,7 @@ export default {
   },
 
   Mutation: {
-    addComment: async (_: any, { eventId, comment }: any, { req }: any) => {
+    follow: async (_: any, { following_id }: any, { req }: any) => {
       if (!req.user)
         return {
           success: false,
@@ -89,10 +89,9 @@ export default {
         };
 
       try {
-        return await commentController.addComment(
-          eventId,
-          comment,
-          req.user.user_id
+        return await followController.followUser(
+          req.user.user_id,
+          following_id
         );
       } catch (e) {
         return {
@@ -102,9 +101,9 @@ export default {
       }
     },
 
-    removeComment: async (
+    unfollow: async (
       _: any,
-      { comment_id, event_id }: { comment_id: string; event_id: string },
+      { following_id }: { following_id: string },
       { req }: any
     ) => {
       if (!req.user)
@@ -114,10 +113,9 @@ export default {
         };
 
       try {
-        return await commentController.removeComment(
-          comment_id,
-          event_id,
-          req.user.user_id
+        return await followController.unfollowUser(
+          req.user.user_id,
+          following_id
         );
       } catch (e) {
         return {

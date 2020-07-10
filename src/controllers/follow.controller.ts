@@ -40,18 +40,25 @@ class FollowController {
     try {
       const follower = userController.getUser({ _id: follower_id });
       const following = userController.getUser({ _id: following_id });
+      if(!follower || !following) return {success: false, errors: [{path: "Follow User", msg: "user doesn't exist"}]}
 
       const newFollow = new Follow({ follower, following });
       await newFollow.save();
 
-      return { success: true };
+      return { success: true user: newFollow};
     } catch (e) {
       throw e;
     }
   }
-  public async unfollowUser() {
+  public async unfollowUser(unFollower_id: string, unFollowing_id: string) {
     try {
-      return { success: true };
+       const unFollower = userController.getUser({ _id: unFollower_id });
+      const unFollowing = userController.getUser({ _id: unFollowing_id });
+      if(!unFollower || !unFollowing) return {success: false, errors: [{path: "Follow User", msg: "user doesn't exist"}]}
+
+      const unfollow = await Follow.findOneAndDelete({follwer: unFollower_id})
+
+      return { success: true, user: unfollow };
     } catch (e) {
       throw e;
     }
