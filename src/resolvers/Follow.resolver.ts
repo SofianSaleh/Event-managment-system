@@ -100,7 +100,12 @@ export default {
         };
 
       try {
-        console.log(following_id);
+        if (following_id === req.user.user_id)
+          return {
+            success: false,
+            errors: [{ path: "follow", msg: `Connot follow self` }],
+          };
+
         return await followController.followUser(
           req.user.user_id,
           following_id
@@ -125,6 +130,12 @@ export default {
         };
 
       try {
+        if (following_id === req.user.user_id)
+          return {
+            success: false,
+            errors: [{ path: "follow", msg: `Connot UnFollow self` }],
+          };
+
         return await followController.unfollowUser(
           req.user.user_id,
           following_id
