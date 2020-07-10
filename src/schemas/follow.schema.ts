@@ -10,8 +10,8 @@ export default gql`
   type Query {
     getYourFollowers: FollowResponse!
     getYourFollowings: FollowResponse!
-    getFollowers: FollowResponse!
-    getFollowings: FollowResponse!
+    # getFollowers: FollowResponse!
+    # getFollowings: FollowResponse!
   }
 
   type FollowResponse {

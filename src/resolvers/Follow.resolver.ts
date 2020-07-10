@@ -26,7 +26,7 @@ export default {
       }
     },
 
-    getYourFollowings: async (_: any, __: any, { req }: any) => {
+    getYourFollowings: async (_: any, { user_id }: any, { req }: any) => {
       if (!req.user)
         return {
           success: false,
@@ -34,7 +34,13 @@ export default {
         };
 
       try {
-        return await followController.getYourFollowings(req.user.user_id);
+        let obj = { follower: "" };
+        if (!user_id) {
+          obj.follower = req.user.user_id;
+        } else if (!!user_id) {
+          obj.follower = user_id;
+        }
+        return await followController.getYourFollowings(obj);
       } catch (e) {
         return {
           success: false,
@@ -42,47 +48,47 @@ export default {
         };
       }
     },
-    getFollowers: async (
-      _: any,
-      { user_id }: { user_id: string },
-      { req }: any
-    ) => {
-      if (!req.user)
-        return {
-          success: false,
-          errors: [{ path: "Token", msg: "UnAuthorized" }],
-        };
+    // getFollowers: async (
+    //   _: any,
+    //   { user_id }: { user_id: string },
+    //   { req }: any
+    // ) => {
+    //   if (!req.user)
+    //     return {
+    //       success: false,
+    //       errors: [{ path: "Token", msg: "UnAuthorized" }],
+    //     };
 
-      try {
-        return followController.getFollowers(user_id);
-      } catch (e) {
-        return {
-          success: false,
-          errors: [{ path: "Event Resolver", msg: `${e.message}` }],
-        };
-      }
-    },
+    //   try {
+    //     return followController.getFollowers(user_id);
+    //   } catch (e) {
+    //     return {
+    //       success: false,
+    //       errors: [{ path: "Event Resolver", msg: `${e.message}` }],
+    //     };
+    //   }
+    // },
 
-    getFollowings: async (
-      _: any,
-      { user_id }: { user_id: string },
-      { req }: any
-    ) => {
-      if (!req.user)
-        return {
-          success: false,
-          errors: [{ path: "Token", msg: "UnAuthorized" }],
-        };
+    // getFollowings: async (
+    //   _: any,
+    //   { user_id }: { user_id: string },
+    //   { req }: any
+    // ) => {
+    //   if (!req.user)
+    //     return {
+    //       success: false,
+    //       errors: [{ path: "Token", msg: "UnAuthorized" }],
+    //     };
 
-      try {
-        return await followController.getFollowings(user_id);
-      } catch (e) {
-        return {
-          success: false,
-          errors: [{ path: "Event Resolver", msg: `${e.message}` }],
-        };
-      }
-    },
+    //   try {
+    //     return await followController.getFollowings(user_id);
+    //   } catch (e) {
+    //     return {
+    //       success: false,
+    //       errors: [{ path: "Event Resolver", msg: `${e.message}` }],
+    //     };
+    //   }
+    // },
   },
 
   Mutation: {

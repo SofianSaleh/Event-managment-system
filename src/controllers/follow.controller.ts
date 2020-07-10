@@ -27,9 +27,9 @@ class FollowController {
       throw e;
     }
   }
-  public async getYourFollowings(user_id: string) {
+  public async getYourFollowings(obj: { follower: string }) {
     try {
-      const following = await Follow.find({ follower: user_id })
+      const following = await Follow.find(obj)
         .populate({
           path: "follower",
           model: "user",
@@ -51,23 +51,23 @@ class FollowController {
       throw e;
     }
   }
-  public async getFollowers(user_id: string) {
-    try {
-      const followers = await Follow.find({ following: user_id });
-      return { success: true, users: followers };
-    } catch (e) {
-      throw e;
-    }
-  }
-  public async getFollowings(user_id: string) {
-    try {
-      const following = await Follow.find({ follower: user_id });
+  // public async getFollowers(user_id: string) {
+  //   try {
+  //     const followers = await Follow.find({ following: user_id });
+  //     return { success: true, users: followers };
+  //   } catch (e) {
+  //     throw e;
+  //   }
+  // }
+  // public async getFollowings(user_id: string) {
+  //   try {
+  //     const following = await Follow.find({ follower: user_id });
 
-      return { success: true, users: following };
-    } catch (e) {
-      throw e;
-    }
-  }
+  //     return { success: true, users: following };
+  //   } catch (e) {
+  //     throw e;
+  //   }
+  // }
   public async followUser(follower_id: string, following_id: string) {
     try {
       const follower = await userController.getUser({ _id: follower_id });
