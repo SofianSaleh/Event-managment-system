@@ -20,7 +20,7 @@ export default {
       }
     },
 
-    getYourFollowing: async (_: any, __: any, { req }: any) => {
+    getYourFollowings: async (_: any, __: any, { req }: any) => {
       if (!req.user)
         return {
           success: false,
@@ -57,7 +57,7 @@ export default {
       }
     },
 
-    getFollowing: async (
+    getFollowings: async (
       _: any,
       { user_id }: { user_id: string },
       { req }: any
