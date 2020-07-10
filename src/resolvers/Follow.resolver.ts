@@ -12,7 +12,7 @@ export default {
         };
 
       try {
-        return followController.getFollowers(req.user.user_id);
+        return followController.getYourFollowers(req.user.user_id);
       } catch (e) {
         return {
           success: false,
@@ -29,7 +29,7 @@ export default {
         };
 
       try {
-        return await followController.getFollowings(req.user.user_id);
+        return await followController.getYourFollowings(req.user.user_id);
       } catch (e) {
         return {
           success: false,

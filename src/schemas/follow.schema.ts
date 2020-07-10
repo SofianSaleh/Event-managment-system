@@ -16,12 +16,17 @@ export default gql`
 
   type FollowResponse {
     success: Boolean!
-    users: [User!]
+    users: [Follow!]
+    errors: [Error!]
+  }
+  type FollowMutationResponse {
+    success: Boolean!
+    user: Follow!
     errors: [Error!]
   }
 
   type Mutation {
-    follow(following_id: String): FollowResponse!
-    unfollow(following_id: String!): FollowResponse!
+    follow(following_id: String): FollowMutationResponse!
+    unfollow(following_id: String!): FollowMutationResponse!
   }
 `;
