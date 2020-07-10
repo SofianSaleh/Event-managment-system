@@ -51,7 +51,7 @@ class EventController {
   public async getEvent(id: string) {
     try {
       const event = await Event.findById(id).populate("comments");
-      console.log(chalk.red(event?.comments));
+      console.log(chalk.red(event?));
       if (!event)
         return {
           success: false,
