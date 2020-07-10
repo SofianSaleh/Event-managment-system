@@ -7,7 +7,7 @@ class FollowController {
       const followers = await Follow.find(obj)
         .populate({
           path: "follower",
-          model: "user",
+          model: "User",
           populate: {
             path: "events",
             model: "Event",
@@ -15,7 +15,7 @@ class FollowController {
         })
         .populate({
           path: "following",
-          model: "user",
+          model: "User",
           populate: {
             path: "events",
             model: "Event",
