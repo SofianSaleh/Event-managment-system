@@ -1,4 +1,4 @@
-import followController from "src/controllers/follow.controller";
+import followController from "../controllers/follow.controller";
 // import chalk from "chalk";
 
 export default {
