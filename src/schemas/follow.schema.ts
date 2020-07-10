@@ -8,9 +8,9 @@ export default gql`
   }
 
   type Query {
-    getYourFollower FollowResponse!
+    getYourFollower: FollowResponse!
     getYourFollowing: FollowResponse!
-    getFollower FollowResponse!
+    getFollower: FollowResponse!
     getFollowing: FollowResponse!
   }
 
@@ -26,7 +26,7 @@ export default gql`
   }
 
   type Mutation {
-    follow(following_id: String): FollowMutationResponse!
+    follow(following_id: String!): FollowMutationResponse!
     unfollow(following_id: String!): FollowMutationResponse!
   }
 `;
